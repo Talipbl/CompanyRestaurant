@@ -22,6 +22,7 @@ namespace Core.DataAccess.EntityFramework
                 return db.SaveChanges();
             }
         }
+
         public bool Add(TEntity entity)
         {
             return TContextEntry(entity, EntityState.Added) > 0 ? true : false;
