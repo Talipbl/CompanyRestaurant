@@ -9,7 +9,7 @@ namespace Entities.Concrete
     {
         public int RecipeID { get; set; }
         public int ProductID { get; set; }
-        public float? Quantity { get; set; }
+        public float Quantity { get; set; }
 
 
         public virtual Product Product { get; set; }

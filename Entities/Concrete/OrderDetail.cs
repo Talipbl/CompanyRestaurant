@@ -11,6 +11,8 @@ namespace Entities.Concrete
         public int ProductID { get; set; }
         public float Quantity { get; set; }
         public decimal Amount { get; set; }
+        public int UnitId { get; set; }
+
 
 
         public virtual Order Order { get; set; }

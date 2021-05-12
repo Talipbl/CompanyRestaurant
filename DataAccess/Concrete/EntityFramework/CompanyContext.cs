@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using DataAccess.Concrete.EntityFramework.Mappings;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,6 +13,16 @@ namespace DataAccess.Concrete.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=DESKTOP-R2TQ29K; Database=CompanyRestaurant; Integrated Security=true");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration<UserClaim>(new UserClaimMapping());
+            modelBuilder.ApplyConfiguration<OrderDetail>(new OrderDetailMapping());
+            modelBuilder.ApplyConfiguration<RecipeProduct>(new RecipeProductMapping());
+            modelBuilder.ApplyConfiguration<Category>(new CategoryMapping());
+            modelBuilder.ApplyConfiguration<Product>(new ProductMapping());
+            modelBuilder.ApplyConfiguration<StockUnit>(new StockUnitMapping());
         }
 
         public virtual DbSet<Product> Products { get; set; }
