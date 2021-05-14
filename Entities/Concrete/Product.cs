@@ -12,8 +12,8 @@ namespace Entities.Concrete
         public string ProductName { get; set; }
         public int CategoryId { get; set; }
         public decimal UnitPrice { get; set; }
-        public Nullable<double> UnitsInRestaurantStock { get; set; }
-        public Nullable<double> UnitsInWarhouseStock { get; set; }
+        public float? UnitsInRestaurantStock { get; set; }
+        public float? UnitsInWarhouseStock { get; set; }
         public int UnitId { get; set; }
         public bool Discontinued { get; set; }
 

@@ -8,6 +8,7 @@ namespace Business.Abstract
 {
     public interface IStockUnitService
     {
+        //Test Service
         IDataResult<List<StockUnit>> GetStockUnits();
     }
 }

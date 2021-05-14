@@ -12,9 +12,9 @@ namespace DataAccess.Concrete.EntityFramework.Mappings
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.HasKey(x => new { x.OrderID, x.ProductID });
-            builder.Property(x => x.Quantity).IsRequired();
-            builder.Property(x => x.Amount).IsRequired();
-            builder.Property(x => x.UnitId).IsRequired();
+            builder.Property(x => x.Quantity).HasColumnType("float").IsRequired();
+            builder.Property(x => x.Amount).HasColumnType("money").IsRequired();
+            builder.Property(x => x.UnitId).HasColumnType("int").IsRequired();
         }
     }
 }

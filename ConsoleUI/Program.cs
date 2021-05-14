@@ -1,4 +1,7 @@
-﻿using Business.Concrete.Managers;
+﻿using Autofac;
+using Business.Abstract;
+using Business.Concrete.Managers;
+using Business.DependencyResolvers.Autofac;
 using DataAccess.Concrete.EntityFramework;
 using System;
 
@@ -8,8 +11,16 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            GetProducts();
-            GetCategories();
+            //IOC CONTAINER CONFIGURATION
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<AutofacBusinessModule>();
+            var container = builder.Build();
+
+            IProductService productService = container.Resolve<IProductService>();
+            ICategoryService categoryService = container.Resolve<ICategoryService>();
+
+            GetProducts(productService);
+            GetCategories(categoryService);
             GetStockUnits();
 
         }
@@ -23,19 +34,21 @@ namespace ConsoleUI
             }
         }
 
-        private static void GetCategories()
+        private static void GetCategories(ICategoryService categoryService)
         {
-            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-            foreach (var category in categoryManager.GetCategories().Data)
+            //CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+
+            foreach (var category in categoryService.GetCategories().Data)
             {
                 Console.WriteLine(category.CategoryName);
             }
         }
 
-        private static void GetProducts()
+        private static void GetProducts(IProductService productService)
         {
-            ProductManager productManager = new ProductManager(new EfProductDal());
-            foreach (var product in productManager.GetProducts().Data)
+            //ProductManager productManager = new ProductManager(new EfProductDal());
+
+            foreach (var product in productService.GetProducts().Data)
             {
                 Console.WriteLine(product.ProductName);
             }
