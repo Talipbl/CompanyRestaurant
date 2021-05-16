@@ -21,8 +21,6 @@ namespace ConsoleUI
             IProductService productService = container.Resolve<IProductService>();
             ICategoryService categoryService = container.Resolve<ICategoryService>();
 
-            //IProductService productService = ServiceTool.ServiceProvider.GetService<IProductService>();
-
             GetProducts(productService);
             //GetCategories(categoryService);
             //GetStockUnits();
@@ -54,7 +52,7 @@ namespace ConsoleUI
 
             foreach (var product in productService.GetProducts().Data)
             {
-                Console.WriteLine($"{product.ProductName} - {product.Category.CategoryName} - {product.UnitPrice.ToString("C2")} - {product.UnitsInRestaurantStock} - {product.UnitsInWarhouseStock}");
+                Console.WriteLine($"{product.ProductName} - {product.UnitPrice.ToString("C2")} - {product.UnitsInRestaurantStock} - {product.UnitsInWarhouseStock}");
             }
         }
     }
