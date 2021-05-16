@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Core.Utilities.Interceptors
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public class MethodIntercepiton : Attribute, IInterceptor
     {
         protected virtual void OnBefore(IInvocation invocation) { }

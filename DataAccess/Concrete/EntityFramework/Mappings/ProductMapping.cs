@@ -14,7 +14,9 @@ namespace DataAccess.Concrete.EntityFramework.Mappings
             builder.Property(x => x.UnitPrice).HasColumnType("money").IsRequired();
             builder.Property(x => x.UnitsInRestaurantStock).HasColumnType("float");
             builder.Property(x => x.UnitsInWarhouseStock).HasColumnType("float");
-            builder.HasOne<StockUnit>().WithMany(x => x.Products).HasForeignKey(x => x.UnitId);
+            //builder.HasOne<Category>(c=>c.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryId);
+            //builder.HasOne<StockUnit>().WithMany(x => x.Products).HasForeignKey(x => x.UnitId);
+            
         }
     }
 }

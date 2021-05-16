@@ -8,8 +8,8 @@ namespace DataAccess.Concrete.EntityFramework.Mappings
     {
         public void Configure(EntityTypeBuilder<StockUnit> builder)
         {
-            builder.HasKey(x => x.UnitID);
-            builder.Property(x => x.UnitType).IsRequired();
+            //builder.HasKey(x => x.UnitID);
+            //builder.Property(x => x.UnitType).IsRequired();
         }
     }
 }

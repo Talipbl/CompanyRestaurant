@@ -22,13 +22,11 @@ namespace WebAPI
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
             //Use custom IOC container ==>
-            
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureContainer<ContainerBuilder>(builder=>
             {
                 builder.RegisterModule(new AutofacBusinessModule());
             })
-
             //End of configuration
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

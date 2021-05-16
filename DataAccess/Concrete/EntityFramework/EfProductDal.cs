@@ -26,7 +26,7 @@ namespace DataAccess.Concrete.EntityFramework
                        ProductName = p.ProductName,
                        UnitPrice = p.UnitPrice,
                        Quantity = rp.Quantity,
-                       //Unit = p.StockUnit.UnitType,
+                       //UnitType = p.StockUnit.UnitType,
                        UnitsInRestaurantStock = p.UnitsInRestaurantStock,
                        UnitsInWarhouseStock = p.UnitsInWarhouseStock
                    };

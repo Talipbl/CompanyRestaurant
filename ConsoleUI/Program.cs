@@ -2,8 +2,10 @@
 using Business.Abstract;
 using Business.Concrete.Managers;
 using Business.DependencyResolvers.Autofac;
+using Core.Utilities.IOC;
 using DataAccess.Concrete.EntityFramework;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ConsoleUI
 {
@@ -19,20 +21,22 @@ namespace ConsoleUI
             IProductService productService = container.Resolve<IProductService>();
             ICategoryService categoryService = container.Resolve<ICategoryService>();
 
+            //IProductService productService = ServiceTool.ServiceProvider.GetService<IProductService>();
+
             GetProducts(productService);
-            GetCategories(categoryService);
-            GetStockUnits();
+            //GetCategories(categoryService);
+            //GetStockUnits();
 
         }
 
-        private static void GetStockUnits()
-        {
-            StockUnitManager stockUnitManager = new StockUnitManager(new EfStockUnitDal());
-            foreach (var unit in stockUnitManager.GetStockUnits().Data)
-            {
-                Console.WriteLine(unit.UnitType);
-            }
-        }
+        //private static void GetStockUnits()
+        //{
+        //    StockUnitManager stockUnitManager = new StockUnitManager(new EfStockUnitDal());
+        //    foreach (var unit in stockUnitManager.GetStockUnits().Data)
+        //    {
+        //        Console.WriteLine(unit.UnitType);
+        //    }
+        //}
 
         private static void GetCategories(ICategoryService categoryService)
         {
@@ -50,7 +54,7 @@ namespace ConsoleUI
 
             foreach (var product in productService.GetProducts().Data)
             {
-                Console.WriteLine(product.ProductName);
+                Console.WriteLine($"{product.ProductName} - {product.Category.CategoryName} - {product.UnitPrice.ToString("C2")} - {product.UnitsInRestaurantStock} - {product.UnitsInWarhouseStock}");
             }
         }
     }

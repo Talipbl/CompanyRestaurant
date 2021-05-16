@@ -26,7 +26,7 @@ namespace Core.Aspects.Autofac.Validation
         {
             //Get instance on runtime
             var validator = (IValidator)Activator.CreateInstance(_validatorType);
-            //Find first argument of the base type of validator type
+            //Find first argument of base type of validator type
             var entityType = _validatorType.BaseType.GetGenericArguments()[0];
             //Find parameters equal to the validator type argument of the method
             var entities = invocation.Arguments.Where(t => t.GetType() == entityType);

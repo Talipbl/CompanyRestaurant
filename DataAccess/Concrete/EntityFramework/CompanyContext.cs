@@ -17,12 +17,14 @@ namespace DataAccess.Concrete.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration<UserClaim>(new UserClaimMapping());
             modelBuilder.ApplyConfiguration<OrderDetail>(new OrderDetailMapping());
             modelBuilder.ApplyConfiguration<RecipeProduct>(new RecipeProductMapping());
             modelBuilder.ApplyConfiguration<Category>(new CategoryMapping());
             modelBuilder.ApplyConfiguration<Product>(new ProductMapping());
-            modelBuilder.ApplyConfiguration<StockUnit>(new StockUnitMapping());
+            //modelBuilder.ApplyConfiguration<StockUnit>(new StockUnitMapping());
+
+            modelBuilder.ApplyConfiguration<OperationClaim>(new OperationClaimMapping());
+            modelBuilder.ApplyConfiguration<PersonClaim>(new PersonClaimMapping());
         }
 
         public virtual DbSet<Product> Products { get; set; }
@@ -34,12 +36,12 @@ namespace DataAccess.Concrete.EntityFramework
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<RecipeProduct> RecipesProducts { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
-        public virtual DbSet<StockUnit> StockUnits { get; set; }
+        //public virtual DbSet<StockUnit> StockUnits { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
 
 
-        public virtual DbSet<Claim> Claims { get; set; }
-        public virtual DbSet<UserClaim> UserClaims { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<OperationClaim> Claims { get; set; }
+        public virtual DbSet<PersonClaim> PersonClaims { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
     }
 }

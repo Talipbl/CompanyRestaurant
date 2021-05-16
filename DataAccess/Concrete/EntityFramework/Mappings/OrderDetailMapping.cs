@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework.Mappings
             builder.HasKey(x => new { x.OrderID, x.ProductID });
             builder.Property(x => x.Quantity).HasColumnType("float").IsRequired();
             builder.Property(x => x.Amount).HasColumnType("money").IsRequired();
-            builder.Property(x => x.UnitId).HasColumnType("int").IsRequired();
+            //builder.Property(x => x.UnitId).HasColumnType("int").IsRequired();
         }
     }
 }

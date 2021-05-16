@@ -7,11 +7,11 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework.Mappings
 {
-    public class UserClaimMapping : IEntityTypeConfiguration<UserClaim>
+    public class PersonClaimMapping : IEntityTypeConfiguration<PersonClaim>
     {
-        public void Configure(EntityTypeBuilder<UserClaim> builder)
+        public void Configure(EntityTypeBuilder<PersonClaim> builder)
         {
-            builder.HasKey(x => new { x.ClaimID, x.UserID });
+            builder.HasKey(x => new { x.ClaimID, x.PersonID });
         }
     }
 }

@@ -13,6 +13,6 @@ namespace Entities.Concrete.DataTransferObject
         public float? UnitsInRestaurantStock { get; set; }
         public float? UnitsInWarhouseStock { get; set; }
         public float? Quantity { get; set; }
-        public string Unit { get; set; }
+        public string UnitType { get; set; }
     }
 }

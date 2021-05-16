@@ -14,12 +14,12 @@ namespace Entities.Concrete
         public decimal UnitPrice { get; set; }
         public float? UnitsInRestaurantStock { get; set; }
         public float? UnitsInWarhouseStock { get; set; }
-        public int UnitId { get; set; }
+        //public int UnitId { get; set; }
         public bool Discontinued { get; set; }
 
 
         public virtual Category Category { get; set; }
-        public virtual StockUnit StockUnit { get; set; }
+        //public virtual StockUnit StockUnit { get; set; }
         public virtual List<RecipeProduct> RecipesProducts { get; set; }
 
     }

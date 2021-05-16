@@ -11,7 +11,7 @@ namespace Core.Utilities.Interceptors
     {
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
-            //Read attribute of class
+            //Read class attribute
             var classAttributes = type.GetCustomAttributes<MethodIntercepiton>
                 (true).ToList();
             //Method attribute
