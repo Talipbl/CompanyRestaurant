@@ -46,6 +46,7 @@ namespace Business.Concrete.Managers
             }
             return new ErrorResult("User not found");
         }
+
         [SecuredOperation("admin,employee.add")]
         public IResult Register(EmployeeRegisterDTO employeeRegisterDTO)
         {

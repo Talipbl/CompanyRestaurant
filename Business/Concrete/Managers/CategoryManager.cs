@@ -17,6 +17,25 @@ namespace Business.Concrete.Managers
         {
             _categoryDal = categoryDal;
         }
+        private IResult BaseProccess(bool success, string message = null)
+        {
+            if (success)
+            {
+                return new SuccessResult(message);
+            }
+            return new ErrorResult();
+        }
+
+        public IResult Add(Category category)
+        {
+
+            return BaseProccess(_categoryDal.Add(category), Messages.Category.Added);
+        }
+
+        public IResult Delete(Category category)
+        {
+            return BaseProccess(_categoryDal.Delete(category), Messages.Category.Deleted);
+        }
 
         public IDataResult<List<Category>> GetCategories()
         {
@@ -26,6 +45,11 @@ namespace Business.Concrete.Managers
         public IDataResult<Category> GetCategory(int categoryId)
         {
             return new SuccessDataResult<Category>(_categoryDal.Get(x => x.CategoryID == categoryId), Messages.Category.Listed);
+        }
+
+        public IResult Update(Category category)
+        {
+            return BaseProccess(_categoryDal.Update(category), Messages.Category.Updated);
         }
     }
 }

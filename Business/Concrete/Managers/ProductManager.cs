@@ -36,7 +36,7 @@ namespace Business.Concrete.Managers
             {
                 return new SuccessResult(message);
             }
-            return new ErrorResult(message);
+            return new ErrorResult();
         }
 
         [SecuredOperation("product.add,admin")]
