@@ -6,6 +6,8 @@ using Core.Utilities.IOC;
 using DataAccess.Concrete.EntityFramework;
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 
 namespace ConsoleUI
 {
@@ -20,6 +22,22 @@ namespace ConsoleUI
 
             IProductService productService = container.Resolve<IProductService>();
             ICategoryService categoryService = container.Resolve<ICategoryService>();
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            ServiceTool.ContainerServiceCreate(serviceCollection);
+
+            Product product = new Product()
+            {
+                ProductName = "Şakşuka",
+                CategoryId = 3,
+                UnitPrice = 25,
+                UnitsInRestaurantStock = 3,
+                UnitsInWarhouseStock = 10,
+                Discontinued = false
+            };
+
+            productService.Add(product);
 
             GetProducts(productService);
             //GetCategories(categoryService);

@@ -12,6 +12,7 @@ using Entities.Concrete.DataTransferObject;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete.Managers
@@ -21,7 +22,7 @@ namespace Business.Concrete.Managers
         IProductDal _productDal;
         ICategoryService _categoryService;
 
-        public ProductManager(IProductDal productDal, ICategoryService categoryService):this(productDal)
+        public ProductManager(IProductDal productDal, ICategoryService categoryService) : this(productDal)
         {
             _categoryService = categoryService;
         }
@@ -39,11 +40,26 @@ namespace Business.Concrete.Managers
             return new ErrorResult();
         }
 
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            var result = _productDal.GetAll(x => x.ProductName == productName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.Product.ProductNameExists);
+            }
+            return new SuccessResult();
+        }
+
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            return BaseProccess(_productDal.Add(product));
+            var result = CheckIfProductNameExists(product.ProductName);
+            if (result.Success)
+            {
+                return BaseProccess(_productDal.Add(product));
+            }
+            return result;
         }
 
         public IResult Delete(int id)
@@ -53,7 +69,7 @@ namespace Business.Concrete.Managers
 
         public IDataResult<Product> GetProduct(int productId)
         {
-            return new SuccessDataResult<Product>(_productDal.Get(x => x.ProductID == productId), Messages.Product.Listed); 
+            return new SuccessDataResult<Product>(_productDal.Get(x => x.ProductID == productId), Messages.Product.Listed);
         }
 
         public IDataResult<List<Product>> GetProducts()

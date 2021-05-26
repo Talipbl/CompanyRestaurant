@@ -84,6 +84,7 @@ namespace Business.Concrete.Managers
             _loginService.Add(login);
             message += "password added";
             return new SuccessResult(message);
+
         }
 
         public IResult UserExists(int employeeId)
