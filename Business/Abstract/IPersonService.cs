@@ -9,7 +9,8 @@ namespace Business.Abstract
 {
     public interface IPersonService
     {
-        IDataResult<Person> GetById(int employeeId);
+        IDataResult<Person> GetById(int personId);
+        IDataResult<Person> GetByPersonelId(string personelId);
         IDataResult<Person> GetByName(string firstName, string LastName);
         IDataResult<List<OperationClaim>> GetClaims(Person person);
         IResult Add(Person person);

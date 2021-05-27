@@ -36,6 +36,11 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<Person>(_personDal.Get(x => x.FirstName == firstName & x.LastName == LastName));
         }
 
+        public IDataResult<Person> GetByPersonelId(string personelId)
+        {
+            return new SuccessDataResult<Person>(_personDal.Get(x => x.Identity == personelId));
+        }
+
         public IDataResult<List<OperationClaim>> GetClaims(Person person)
         {
             return new SuccessDataResult<List<OperationClaim>>(_personDal.GetClaims(person));

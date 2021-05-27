@@ -37,6 +37,7 @@ namespace DataAccess.Concrete.EntityFramework
         public virtual DbSet<Reservation> Reservations { get; set; }
         //public virtual DbSet<StockUnit> StockUnits { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
 
 
         public virtual DbSet<OperationClaim> Claims { get; set; }

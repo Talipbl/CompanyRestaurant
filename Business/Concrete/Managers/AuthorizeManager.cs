@@ -33,22 +33,24 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<AccessToken>(accessToken, "Token Created");
         }
 
-        public IResult Login(EmployeeLoginDTO employeeLoginDTO)
+        public IDataResult<Person> Login(EmployeeLoginDTO employeeLoginDTO)
         {
-            if (!UserExists(employeeLoginDTO.EmployeeID).Success)
+            var employeeToCheck = UserExistsWithEmployeeId(employeeLoginDTO.EmployeeID);
+            if (!employeeToCheck.Success)
             {
                 var passwordCheck = _loginService.GetPassword(employeeLoginDTO.EmployeeID);
                 if (HashingHelper.VerifyPasswordHash(employeeLoginDTO.Password, passwordCheck.Data.PasswordHash, passwordCheck.Data.PasswordSalt))
                 {
-                    return new SuccessResult("Login successful");
+                    var person = _personService.GetById(employeeToCheck.Data.PersonId);
+                    return new SuccessDataResult<Person>(person.Data,"Login successful");
                 }
-                return new ErrorResult("Password error");
+                return new ErrorDataResult<Person>(default,"Password error");
             }
-            return new ErrorResult("User not found");
+            return new ErrorDataResult<Person>(default,"User not found");
         }
 
-        [SecuredOperation("admin,employee.add")]
-        public IResult Register(EmployeeRegisterDTO employeeRegisterDTO)
+        //[SecuredOperation("admin,employee.add")]
+        public IDataResult<Person> Register(EmployeeRegisterDTO employeeRegisterDTO)
         {
             string message;
             byte[] passwordSalt, passwordHash;
@@ -58,6 +60,7 @@ namespace Business.Concrete.Managers
             {
                 FirstName = employeeRegisterDTO.FirstName,
                 LastName = employeeRegisterDTO.LastName,
+                Identity = employeeRegisterDTO.Identity,
                 Phone = employeeRegisterDTO.Phone
             };
             _personService.Add(person);
@@ -83,13 +86,21 @@ namespace Business.Concrete.Managers
             };
             _loginService.Add(login);
             message += "password added";
-            return new SuccessResult(message);
-
+            return new SuccessDataResult<Person>(person,message);
         }
 
-        public IResult UserExists(int employeeId)
+        public IDataResult<Employee> UserExistsWithEmployeeId(int employeeId)
         {
-            if (_employeeService.GetEmployee(employeeId) != null)
+            var employeeToCheck = _employeeService.GetEmployee(employeeId);
+            if (employeeToCheck.Data != null)
+            {
+                return new ErrorDataResult<Employee>(employeeToCheck.Data,"User exists");
+            }
+            return new SuccessDataResult<Employee>(default,"User not found");
+        }
+        public IResult UserExistsWithPersonelId(string personelId)
+        {
+            if (_personService.GetByPersonelId(personelId).Data != null)
             {
                 return new ErrorResult("User exists");
             }
