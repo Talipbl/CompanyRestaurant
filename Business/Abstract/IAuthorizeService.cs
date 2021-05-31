@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IAuthorizeService
     {
         IDataResult<Person> Register(EmployeeRegisterDTO employeeRegisterDTO);
-        IDataResult<Person> Login(EmployeeLoginDTO employeeLoginDTO);
+        IDataResult<EmployeeLoginDTO> Login(EmployeeLoginDTO employeeLoginDTO);
         IDataResult<Employee> UserExistsWithEmployeeId(int employeeId);
         IResult UserExistsWithPersonelId(string perosnelId);
         IDataResult<AccessToken> CreateAccessToken(Person person);

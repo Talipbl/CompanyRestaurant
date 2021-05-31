@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using Core.Utilities.Results.Abstract;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -9,29 +12,43 @@ namespace Business.Concrete.Managers
 {
     public class RecipeManager : IRecipeService
     {
-        public IResult Add()
+        IRecipeDal _recipeDal;
+        public RecipeManager(IRecipeDal recipeDal)
         {
-            throw new NotImplementedException();
+            _recipeDal = recipeDal;
         }
 
-        public IResult Delete()
+        private IResult BaseProcess(bool success, string message)
         {
-            throw new NotImplementedException();
+            if (success)
+            {
+                return new SuccessResult(message);
+            }
+            return new ErrorResult();
+        }
+        public IResult Add(Recipe recipe)
+        {
+            return BaseProcess(_recipeDal.Add(recipe), Messages.Added);
+        }
+
+        public IResult Delete(int recipeId)
+        {
+            return BaseProcess(_recipeDal.Delete(new Recipe { RecipeID = recipeId }), Messages.Deleted);
         }
 
         public IDataResult<Recipe> GetRecipe(int recipeId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Recipe>(_recipeDal.Get(x => x.RecipeID == recipeId),Messages.Listed);
         }
 
         public IDataResult<List<Recipe>> GetRecipes()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Recipe>>(_recipeDal.GetAll(), Messages.AllListed);
         }
 
-        public IResult Update()
+        public IResult Update(Recipe recipe)
         {
-            throw new NotImplementedException();
+            return BaseProcess(_recipeDal.Update(recipe), Messages.Updated);
         }
     }
 }

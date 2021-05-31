@@ -13,6 +13,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+
+        HttpContextAccessor contextAccessor = new HttpContextAccessor();
+
         private IAuthorizeService _auhthorizeService;
         public AuthController(IAuthorizeService authorizeService)
         {
@@ -39,17 +42,18 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(EmployeeLoginDTO employeeLoginDTO)
         {
-            var userLogin = _auhthorizeService.Login(employeeLoginDTO);
-            if (userLogin.Success)
+            var loginUser = _auhthorizeService.Login(employeeLoginDTO);
+            if (loginUser.Data.Person.Success)
             {
-                var userAccessToken = _auhthorizeService.CreateAccessToken(userLogin.Data);
-                if (userAccessToken.Success)
+                loginUser.Data.AccessToken = _auhthorizeService.CreateAccessToken(loginUser.Data.Person.Data);
+                if (loginUser.Data.AccessToken.Success)
                 {
-                    return Ok(userAccessToken);
+
+                    return Ok(loginUser);
                 }
-                return BadRequest(userAccessToken.Message);
+                return BadRequest(loginUser.Data.AccessToken.Message);
             }
-            return BadRequest(userLogin.Message);
+            return BadRequest(loginUser.Data.Person.Message);
         }
     }
 }

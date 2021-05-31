@@ -14,5 +14,6 @@ namespace Business.Abstract
         IDataResult<Person> GetByName(string firstName, string LastName);
         IDataResult<List<OperationClaim>> GetClaims(Person person);
         IResult Add(Person person);
+        IResult Update(Person person);
     }
 }

@@ -40,7 +40,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfRecipeDal>().As<IRecipeDal>().SingleInstance();
 
             builder.RegisterType<TableManager>().As<ITableService>().SingleInstance();
-            builder.RegisterType<EfTableDal>().As<EfTableDal>().SingleInstance();
+            builder.RegisterType<EfTableDal>().As<ITableDal>().SingleInstance();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 

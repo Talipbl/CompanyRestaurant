@@ -35,6 +35,8 @@ namespace WebAPI
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddSession();
+
             //Authentication service is added
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

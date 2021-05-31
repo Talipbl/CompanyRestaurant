@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +13,30 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : Controller
     {
-        private IProductService _productService; 
+        private IProductService _productService;
         public ProductsController(IProductService productService)
         {
             _productService = productService;
+        }
+
+        private IActionResult BaseProcess(IResult result)
+        {
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("get")]
+        public IActionResult Get(int productId)
+        {
+            var result = _productService.GetProduct(productId);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
         }
 
         [HttpGet("getall")]
@@ -32,12 +53,17 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Product product)
         {
-            var result = _productService.Add(product);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
+            return BaseProcess(_productService.Add(product));
+        }
+        [HttpPost("update")]
+        public IActionResult Update(Product product)
+        {
+            return BaseProcess(_productService.Update(product));
+        }
+        [HttpPost("delete")]
+        public IActionResult Delete(int id)
+        {
+            return BaseProcess(_productService.Delete(id));
         }
     }
 }

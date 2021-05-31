@@ -32,9 +32,9 @@ namespace Business.Concrete.Managers
             return BaseProccess(_categoryDal.Add(category), Messages.Category.Added);
         }
 
-        public IResult Delete(Category category)
+        public IResult Delete(int categoryId)
         {
-            return BaseProccess(_categoryDal.Delete(category), Messages.Category.Deleted);
+            return BaseProccess(_categoryDal.Delete(new Category { CategoryID = categoryId }), Messages.Category.Deleted);
         }
 
         public IDataResult<List<Category>> GetCategories()

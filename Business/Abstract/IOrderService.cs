@@ -1,15 +1,18 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 
 namespace Business.Abstract
 {
     public interface IOrderService
     {
-        IResult Add();
-        IResult Delete();
-        IResult Update();
+        IResult Add(Order order);
+        IResult Delete(int orderId);
+        IResult Update(Order order);
         IDataResult<List<Order>> GetOrders();
         IDataResult<Order> GetOrder(int orderId);
+        IDataResult<List<Order>> GetLastOrders(int takeValue);
+        IDataResult<decimal> GetTotalOrderAmountByDateTime(int day);
     }
 }

@@ -31,7 +31,7 @@ namespace Business.Concrete.Managers
             _productDal = productDal;
         }
 
-        private IResult BaseProccess(bool success, string message = null)
+        private IResult BaseProcess(bool success, string message = null)
         {
             if (success)
             {
@@ -57,14 +57,14 @@ namespace Business.Concrete.Managers
             var result = CheckIfProductNameExists(product.ProductName);
             if (result.Success)
             {
-                return BaseProccess(_productDal.Add(product));
+                return BaseProcess(_productDal.Add(product),Messages.Product.Added);
             }
             return result;
         }
 
         public IResult Delete(int id)
         {
-            return BaseProccess(_productDal.Delete(new Product { ProductID = id }), Messages.Product.Deleted);
+            return BaseProcess(_productDal.Delete(new Product { ProductID = id }), Messages.Product.Deleted);
         }
 
         public IDataResult<Product> GetProduct(int productId)
@@ -89,7 +89,7 @@ namespace Business.Concrete.Managers
 
         public IResult Update(Product product)
         {
-            return BaseProccess(_productDal.Update(product), Messages.Product.Updated);
+            return BaseProcess(_productDal.Update(product), Messages.Product.Updated);
         }
     }
 }

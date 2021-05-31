@@ -33,20 +33,21 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<AccessToken>(accessToken, "Token Created");
         }
 
-        public IDataResult<Person> Login(EmployeeLoginDTO employeeLoginDTO)
+        public IDataResult<EmployeeLoginDTO> Login(EmployeeLoginDTO employeeLoginDTO)
         {
-            var employeeToCheck = UserExistsWithEmployeeId(employeeLoginDTO.EmployeeID);
-            if (!employeeToCheck.Success)
+            EmployeeLoginDTO employeeLogin = new EmployeeLoginDTO();
+            employeeLogin.Employee = UserExistsWithEmployeeId(employeeLoginDTO.EmployeeID);
+            if (!employeeLogin.Employee.Success)
             {
                 var passwordCheck = _loginService.GetPassword(employeeLoginDTO.EmployeeID);
                 if (HashingHelper.VerifyPasswordHash(employeeLoginDTO.Password, passwordCheck.Data.PasswordHash, passwordCheck.Data.PasswordSalt))
                 {
-                    var person = _personService.GetById(employeeToCheck.Data.PersonId);
-                    return new SuccessDataResult<Person>(person.Data,"Login successful");
+                    employeeLogin.Person = _personService.GetById(employeeLogin.Employee.Data.PersonId);
+                    return new SuccessDataResult<EmployeeLoginDTO>(employeeLogin,"Login successful");
                 }
-                return new ErrorDataResult<Person>(default,"Password error");
+                return new ErrorDataResult<EmployeeLoginDTO>(default,"Password error");
             }
-            return new ErrorDataResult<Person>(default,"User not found");
+            return new ErrorDataResult<EmployeeLoginDTO>(default,"User not found");
         }
 
         //[SecuredOperation("admin,employee.add")]

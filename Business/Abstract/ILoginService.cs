@@ -7,5 +7,8 @@ namespace Business.Abstract
     {
         IResult Add(Login login);
         IDataResult<Login> GetPassword(int employeeId);
+        IResult Update(Login login);
+        IResult Delete(int employeeId);
+
     }
 }

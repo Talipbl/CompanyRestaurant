@@ -10,7 +10,8 @@ namespace Entities.Concrete
         public int OrderID { get; set; }
         public int EmployeeId { get; set; }
         public int TableId { get; set; }
-        public DateTime? OrderDate { get; set; }
+        public decimal TotalPrice { get; set; }
+        public DateTime OrderDate { get; set; }
 
 
         public virtual Employee Employee { get; set; }

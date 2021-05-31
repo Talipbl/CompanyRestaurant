@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities;
 using Core.Utilities.Results;
 using Core.Utilities.Results.Abstract;
@@ -21,9 +22,9 @@ namespace Business.Concrete.Managers
         {
             if (_personDal.Add(person))
             {
-                return new SuccessResult("Person added");
+                return new SuccessResult(Messages.Added);
             }
-            return new ErrorResult("Could not be added");
+            return new ErrorResult();
         }
 
         public IDataResult<Person> GetById(int personId)
@@ -44,6 +45,15 @@ namespace Business.Concrete.Managers
         public IDataResult<List<OperationClaim>> GetClaims(Person person)
         {
             return new SuccessDataResult<List<OperationClaim>>(_personDal.GetClaims(person));
+        }
+
+        public IResult Update(Person person)
+        {
+            if (_personDal.Update(person))
+            {
+                return new SuccessResult(Messages.Updated);
+            }
+            return new ErrorResult();
         }
     }
 }

@@ -1,0 +1,109 @@
+﻿@model HomepageDTO
+
+@{
+    ViewBag.Title = "Startup";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<h2>Startup</h2>
+<hr />
+
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-2">
+                <div class="card rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Anlık Satış</h5>
+                        <p class="card-text">@Model.OrderAmounts.ToString("C2")</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-2">
+                <div class="card rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Anlık Müşteri</h5>
+                        <p class="card-text">@Model.TableStatus.chairCount</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-2">
+                <div class="card rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Kapasite</h5>
+                        <p class="card-text">
+                            <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-2">
+                <div class="card rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Card4</h5>
+                        <p class="card-text">Card4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="p-2">
+                <div class="card rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Son İşlemler</h5>
+                        <p class="card-text">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Sipariş No</th>
+                                        <th>Masa No</th>
+                                        <th>Sipariş Tarihi</th>
+                                        <th>Tutar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model.LastOrders)
+                                    {
+                                        <tr>
+                                            <td>@order.OrderID</td>
+                                            <td>@order.TableId</td>
+                                            <td>@order.OrderDate.ToString("HH:mm")</td>
+                                            <td>@order.TotalPrice</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var xValues = ["Dolu", "Boş"];
+    var yValues = [@Model.TableStatus.falseValue, @Model.TableStatus.trueValue];
+    var barColors = [
+        "#b91d47",
+        "#81b214",
+    ];
+
+    new Chart("myChart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: false
+            }
+        }
+    });
+</script>
