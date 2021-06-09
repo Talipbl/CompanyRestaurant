@@ -11,6 +11,7 @@ namespace Business.Abstract
         IResult Delete(int tableId);
         IResult Update(Table table);
         IDataResult<List<Table>> GetTables();
+        IDataResult<List<Table>> GetTableFilterStatus(bool statu);
         IDataResult<Table> GetTable(int tableId);
         IDataResult<TablesStatusDTO> GetTableCapacity();
     }

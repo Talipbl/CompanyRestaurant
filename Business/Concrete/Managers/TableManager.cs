@@ -75,5 +75,10 @@ namespace Business.Concrete.Managers
             }
             return new ErrorDataResult<TablesStatusDTO>(default, Messages.Error);
         }
+
+        public IDataResult<List<Table>> GetTableFilterStatus(bool statu)
+        {
+            return new SuccessDataResult<List<Table>>(_tableDal.GetAll(x => x.Status == statu));
+        }
     }
 }

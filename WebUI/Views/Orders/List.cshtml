@@ -1,0 +1,78 @@
+﻿@model OrderViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Add</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="col-md-12 row">
+    <div class="col-md-9">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ürün Adı</th>
+                    <th>Fiyatı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.ProductID</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.UnitPrice.ToString("C2")</td>
+                        <td colspan="2"><a asp-action="AddTab" asp-controller="Orders" asp-route-productId="@product.ProductID" asp-route-tableId="@Model.Order.TableId" asp-route-orderDate="@Model.Order.OrderDate" class="btn btn-primary">Adisyona Ekle</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div>
+                <input asp-for="Order.EmployeeId" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="Order.TableId" class="control-label"></label>
+                    <input asp-for="Order.TableId" class="form-control" />
+                    <span asp-validation-for="Order.TableId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.OrderDate" class="control-label"></label>
+                    <input asp-for="Order.OrderDate" class="form-control" />
+                    <span asp-validation-for="Order.OrderDate" class="text-danger"></span>
+                </div>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ürün Adı</th>
+                            <th>Adedi</th>
+                            <th>Toplam Fiyatı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tab in Model.TabManager.Tabs)
+                        {
+                            <tr>
+                                <td>@tab.ID</td>
+                                <td>@tab.Name</td>
+                                <td>@tab.Amount</td>
+                                <td>@tab.TotalPrice.ToString("C2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-action="OrderCheckout" asp-controller="Orders" asp-route-tableId="@Model.Order.TableId"  class="btn btn-success">Siparişi Tamamla</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

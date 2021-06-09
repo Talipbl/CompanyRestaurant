@@ -1,6 +1,9 @@
 ﻿using Core.Utilities.Results;
 using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.DataTransferObject;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -14,17 +17,18 @@ using WebUI.Models.DataTransferObjects;
 
 namespace WebUI.Controllers
 {
+    //[Authorize]
     public class HomeController : Controller
     {
         string _url = "https://localhost:44396/";
         ProductProcessor _productProcessor;
         OrderProcessor _orderProcessor;
         TableProcessor _tableProcessor;
-        public HomeController()
+        public HomeController(IHttpContextAccessor contextAccessor)
         {
-            _productProcessor = new ProductProcessor(_url);
-            _tableProcessor = new TableProcessor(_url);
-            _orderProcessor = new OrderProcessor(_url);
+            _productProcessor = new ProductProcessor(_url, Token.GetToken(contextAccessor));
+            _tableProcessor = new TableProcessor(_url, Token.GetToken(contextAccessor));
+            _orderProcessor = new OrderProcessor(_url, Token.GetToken(contextAccessor));
         }
 
         [HttpGet]
@@ -34,7 +38,7 @@ namespace WebUI.Controllers
             {
                 TableStatus = await _tableProcessor.GetTableStatusAsync(),
                 OrderAmounts = await _orderProcessor.GetOrdersAmountAsync(),
-                LastOrders = await _orderProcessor.GetLastOrders()
+                LastOrders = await _orderProcessor.GetLastOrdersAsync()
             };
             return View(homePage);
         }

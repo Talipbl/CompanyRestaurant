@@ -68,5 +68,15 @@ namespace Business.Concrete.Managers
             }
             return new ErrorDataResult<decimal>(default, Messages.Error);
         }
+
+        public IDataResult<Order> GetOrderByDateTime(DateTime dateTime)
+        {
+            return new SuccessDataResult<Order>(_orderDal.Get(x => x.OrderDate == dateTime));
+        }
+
+        public IDataResult<Order> GetLastOrder()
+        {
+            return new SuccessDataResult<Order>(_orderDal.GetLastOrder());
+        }
     }
 }

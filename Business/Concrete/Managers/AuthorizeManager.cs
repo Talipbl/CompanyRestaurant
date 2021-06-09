@@ -33,21 +33,22 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<AccessToken>(accessToken, "Token Created");
         }
 
-        public IDataResult<EmployeeLoginDTO> Login(EmployeeLoginDTO employeeLoginDTO)
+        public IDataResult<EmployeeSessionDTO> Login(EmployeeLoginDTO employeeLoginDTO)
         {
-            EmployeeLoginDTO employeeLogin = new EmployeeLoginDTO();
-            employeeLogin.Employee = UserExistsWithEmployeeId(employeeLoginDTO.EmployeeID);
-            if (!employeeLogin.Employee.Success)
+            EmployeeSessionDTO employeeSession = new EmployeeSessionDTO();
+            var result = UserExistsWithEmployeeId(employeeLoginDTO.EmployeeID);
+            if (!result.Success)
             {
+                employeeSession.Employee = result.Data;
                 var passwordCheck = _loginService.GetPassword(employeeLoginDTO.EmployeeID);
                 if (HashingHelper.VerifyPasswordHash(employeeLoginDTO.Password, passwordCheck.Data.PasswordHash, passwordCheck.Data.PasswordSalt))
                 {
-                    employeeLogin.Person = _personService.GetById(employeeLogin.Employee.Data.PersonId);
-                    return new SuccessDataResult<EmployeeLoginDTO>(employeeLogin,"Login successful");
+                    employeeSession.Person = _personService.GetById(result.Data.PersonId).Data;
+                    return new SuccessDataResult<EmployeeSessionDTO>(employeeSession, "Login successful");
                 }
-                return new ErrorDataResult<EmployeeLoginDTO>(default,"Password error");
+                return new ErrorDataResult<EmployeeSessionDTO>(default, "Password error");
             }
-            return new ErrorDataResult<EmployeeLoginDTO>(default,"User not found");
+            return new ErrorDataResult<EmployeeSessionDTO>(default, "User not found");
         }
 
         //[SecuredOperation("admin,employee.add")]
@@ -87,7 +88,7 @@ namespace Business.Concrete.Managers
             };
             _loginService.Add(login);
             message += "password added";
-            return new SuccessDataResult<Person>(person,message);
+            return new SuccessDataResult<Person>(person, message);
         }
 
         public IDataResult<Employee> UserExistsWithEmployeeId(int employeeId)
@@ -95,9 +96,9 @@ namespace Business.Concrete.Managers
             var employeeToCheck = _employeeService.GetEmployee(employeeId);
             if (employeeToCheck.Data != null)
             {
-                return new ErrorDataResult<Employee>(employeeToCheck.Data,"User exists");
+                return new ErrorDataResult<Employee>(employeeToCheck.Data, "User exists");
             }
-            return new SuccessDataResult<Employee>(default,"User not found");
+            return new SuccessDataResult<Employee>(default, "User not found");
         }
         public IResult UserExistsWithPersonelId(string personelId)
         {

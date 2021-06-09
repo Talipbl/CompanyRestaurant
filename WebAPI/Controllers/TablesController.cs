@@ -29,6 +29,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("gettablesfilterstatus")]
+        public IActionResult GetTablesFilterStatus(bool statu)
+        {
+            var result = _tableService.GetTableFilterStatus(statu);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("gettables")]
+        public IActionResult GetTables()
+        {
+            var result = _tableService.GetTables();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
         
     }
 }

@@ -11,6 +11,15 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfOrderDal : EfEntityRepositoryBase<Order, CompanyContext>, IOrderDal
     {
+        public Order GetLastOrder()
+        {
+            using (CompanyContext db = new CompanyContext())
+            {
+                IQueryable<Order> result = db.Set<Order>().Take(1).OrderByDescending(x => x.OrderDate);
+                return result.First();
+            }
+        }
+
         //
         public List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 10)
         {

@@ -11,8 +11,10 @@ namespace Business.Abstract
         IResult Delete(int orderId);
         IResult Update(Order order);
         IDataResult<List<Order>> GetOrders();
+        IDataResult<Order> GetOrderByDateTime(DateTime dateTime);
         IDataResult<Order> GetOrder(int orderId);
         IDataResult<List<Order>> GetLastOrders(int takeValue);
         IDataResult<decimal> GetTotalOrderAmountByDateTime(int day);
+        IDataResult<Order> GetLastOrder();
     }
 }

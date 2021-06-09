@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebUI.Methods
 {
-    public class ApiMethods
+    public class ApiMethod
     {
         public static HttpClient ApiClient { get; private set; }
 
@@ -25,7 +25,7 @@ namespace WebUI.Methods
             }
             throw new Exception(response.ReasonPhrase);
         }
-        public static async Task<TEntity> PostApiResponse<TEntity>(HttpClient apiClient, string currentUrl, TEntity entity)
+        public static async Task<TEntity> PostApiResponse<TEntity,T>(HttpClient apiClient, string currentUrl, T entity)
         {
             ApiClient = apiClient;
             var jsonFormat = JsonConvert.SerializeObject(entity);

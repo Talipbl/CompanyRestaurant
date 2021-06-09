@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Concrete.Managers;
 using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : Controller
     {
         private IProductService _productService;
@@ -28,7 +31,7 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("get")]
+        [HttpGet("get/{id}")]
         public IActionResult Get(int productId)
         {
             var result = _productService.GetProduct(productId);

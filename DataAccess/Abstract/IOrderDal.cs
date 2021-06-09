@@ -11,5 +11,6 @@ namespace DataAccess.Abstract
     {
         //
         List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 10);
+        Order GetLastOrder();
     }
 }

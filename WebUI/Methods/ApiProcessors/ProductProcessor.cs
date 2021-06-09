@@ -15,18 +15,25 @@ namespace WebUI.Methods.ApiProcessors
         string _url;
         public static HttpClient ApiClient { get; private set; }
 
-        public ProductProcessor(string url)
+        public ProductProcessor(string url, string accessToken)
         {
             _url = url + "api/products/";
             ApiClient = new HttpClient();
             ApiClient.DefaultRequestHeaders.Accept.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            ApiClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
         }
 
         public async Task<List<Product>> GetProductsAsync()
         {
             string currentUrl = _url + "getall";
-            return await ApiMethods.GetApiResponse<List<Product>>(ApiClient, currentUrl);
+            return await ApiMethod.GetApiResponse<List<Product>>(ApiClient, currentUrl);
+        }
+
+        public async Task<Product> GetProductAsync(int productId)
+        {
+            string currentUrl = _url + "get/productId?productId=" + productId;
+            return await ApiMethod.GetApiResponse<Product>(ApiClient, currentUrl);
         }
     }
 }

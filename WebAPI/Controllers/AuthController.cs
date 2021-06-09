@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Entities.Concrete.DataTransferObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,17 +44,16 @@ namespace WebAPI.Controllers
         public IActionResult Login(EmployeeLoginDTO employeeLoginDTO)
         {
             var loginUser = _auhthorizeService.Login(employeeLoginDTO);
-            if (loginUser.Data.Person.Success)
+            if (loginUser.Success)
             {
-                loginUser.Data.AccessToken = _auhthorizeService.CreateAccessToken(loginUser.Data.Person.Data);
-                if (loginUser.Data.AccessToken.Success)
+                loginUser.Data.AccessToken = _auhthorizeService.CreateAccessToken(loginUser.Data.Person).Data;
+                if (loginUser.Data.AccessToken != null)
                 {
-
-                    return Ok(loginUser);
+                    return Ok(loginUser.Data);
                 }
-                return BadRequest(loginUser.Data.AccessToken.Message);
+                return BadRequest(Messages.Error);
             }
-            return BadRequest(loginUser.Data.Person.Message);
+            return BadRequest(Messages.Error);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results.Abstract;
-using Entities.Concrete.DataTransferObject;
+using Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,25 @@ using System.Threading.Tasks;
 
 namespace WebUI.Methods.ApiProcessors
 {
-    public class AuthProcessor
+    public class OrderDetailProcessor
     {
         string _url;
         public static HttpClient ApiClient { get; private set; }
 
-        public AuthProcessor(string url)
+        public OrderDetailProcessor(string url, string accessToken)
         {
-            _url = url + "api/auth/";
+            _url = url + "api/orderdetails/";
             ApiClient = new HttpClient();
             ApiClient.DefaultRequestHeaders.Accept.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            ApiClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
         }
 
-        public async Task<EmployeeSessionDTO> LoginAsync(EmployeeLoginDTO employeeLogin)
+        public async void AddOrderDetailAsync(OrderDetail orderDetail)
         {
-            string currentUrl = _url + "login";
-            return await ApiMethod.PostApiResponse<EmployeeSessionDTO,EmployeeLoginDTO>(ApiClient, currentUrl, employeeLogin);
+            string currentUrl = _url + "add";
+            await ApiMethod.PostApiResponse<string, OrderDetail>(ApiClient, currentUrl, orderDetail);
         }
+
     }
 }

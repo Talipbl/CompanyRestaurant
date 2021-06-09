@@ -1,4 +1,5 @@
 using Core.Utilities.IOC;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,9 +21,21 @@ namespace WebUI
             services.AddMvc();
 
             services.AddSession();
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //ServiceTool.ContainerServiceCreate(services);
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Logout";
+                options.AccessDeniedPath = "/Auth/Login";
+
+                options.Cookie = new CookieBuilder();
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddDistributedMemoryCache();
+
+            ServiceTool.ContainerServiceCreate(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,9 +51,13 @@ namespace WebUI
 
             app.UseRouting();
 
+            app.UseAuthorization();
+
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("Default", "{controller=Orders}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("Default", "{controller=Auth}/{action=Login}/{id?}");
             });
 
 

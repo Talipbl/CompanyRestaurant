@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Core.Aspects.Autofac.Validation
 {
-    public class ValidationAspect : MethodIntercepiton
+    public class ValidationAspect : MethodInterception
     {
         //invocation = method
         private Type _validatorType; 

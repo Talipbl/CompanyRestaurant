@@ -12,11 +12,11 @@ namespace Core.Utilities.Interceptors
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             //Read class attribute
-            var classAttributes = type.GetCustomAttributes<MethodIntercepiton>
+            var classAttributes = type.GetCustomAttributes<MethodInterception>
                 (true).ToList();
             //Method attribute
             var methodAttributes = type.GetMethod(method.Name)
-                .GetCustomAttributes<MethodIntercepiton>(true);
+                .GetCustomAttributes<MethodInterception>(true);
             classAttributes.AddRange(methodAttributes);
 
             return classAttributes.ToArray();
