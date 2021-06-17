@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities;
+using Entities.Concrete;
 using Entities.Concrete.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace WebUI.Models.DataTransferObjects
         public TablesStatusDTO TableStatus { get; set; }
         public decimal OrderAmounts { get; set; }
         public List<Order> LastOrders { get; set; }
+        public Person Person { get; set; }
     }
 }

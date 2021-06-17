@@ -4,42 +4,43 @@
     ViewData["Title"] = "TableList";
 }
 
-<h1>TableList</h1>
-<h4>Table</h4>
+<h1>Sipariş Yönetimi</h1>
 
 <hr />
+
 <div class="container">
-    <div class="row col-md-12">
-        <div class="col-md-4 m-3>
-            @foreach (var table in Model.Tables)
+    <div class="row">
+        @foreach (var table in Model.Tables)
+        {
+
+            if (!table.Status)
             {
-                if (table.Status)
-                {
+                <div class="col m-3">
                     <div class="card" style="width: 18rem;">
                         <h4 class="card-header" style="background-color: indianred">Masa @table.TableID</h4>
                         <div class="card-body">
                             <h5 class="card-title">@table.Status</h5>
                             <p class="card-text">Sandalye Sayısı: @table.ChairCount</p>
-                            <a href="#" class="btn btn-primary">Seç</a>
+                            <a asp-action="List" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
                         </div>
                     </div>
-                }
-                else
-                {
+                </div>
+            }
+            else
+            {
+                <div class="col m-3">
                     <div class="card" style="width: 18rem;">
                         <h4 class="card-header" style="background-color: aquamarine">Masa @table.TableID</h4>
                         <div class="card-body">
                             <h5 class="card-title">@table.Status</h5>
                             <p class="card-text">Sandalye Sayısı: @table.ChairCount</p>
-                            <a asp-action="List" asp-controller="Orders" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
+                            <a asp-action="List" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
                         </div>
                     </div>
-                }
+                </div>
+                
             }
-        </div>
-    </div>
-</div>
+        }
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    </div>
 </div>

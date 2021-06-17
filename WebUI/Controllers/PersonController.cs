@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,22 +10,21 @@ using WebUI.Methods.ApiProcessors;
 
 namespace WebUI.Controllers
 {
-    public class TablesController : Controller
+    public class PersonController : Controller
     {
         string _url = "https://localhost:44396/";
-        TableProcessor _tableProcessor;
+        PersonProcessor _personProcessor;
 
-        public TablesController(IHttpContextAccessor contextAccessor)
+        public PersonController(IHttpContextAccessor contextAccessor)
         {
             string accessToken = Token.GetToken(contextAccessor);
-            _tableProcessor = new TableProcessor(_url, accessToken);
+            _personProcessor = new PersonProcessor(_url, accessToken);
         }
-
         [HttpGet]
-        public async Task<ActionResult> GetTables()
+        public async Task<IActionResult> GetPerson(int personId)
         {
-            var result = await _tableProcessor.GetTables();
-            if (result!=null)
+            var result = await _personProcessor.GetPerson(personId);
+            if (result != null)
             {
                 return View(result);
             }

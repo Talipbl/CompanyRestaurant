@@ -24,11 +24,15 @@ namespace WebUI.Controllers
         ProductProcessor _productProcessor;
         OrderProcessor _orderProcessor;
         TableProcessor _tableProcessor;
+        PersonProcessor _personProcessor;
+
         public HomeController(IHttpContextAccessor contextAccessor)
         {
             _productProcessor = new ProductProcessor(_url, Token.GetToken(contextAccessor));
             _tableProcessor = new TableProcessor(_url, Token.GetToken(contextAccessor));
             _orderProcessor = new OrderProcessor(_url, Token.GetToken(contextAccessor));
+            _personProcessor = new PersonProcessor(_url, Token.GetToken(contextAccessor));
+
         }
 
         [HttpGet]
@@ -38,9 +42,11 @@ namespace WebUI.Controllers
             {
                 TableStatus = await _tableProcessor.GetTableStatusAsync(),
                 OrderAmounts = await _orderProcessor.GetOrdersAmountAsync(),
-                LastOrders = await _orderProcessor.GetLastOrdersAsync()
+                LastOrders = await _orderProcessor.GetLastOrdersAsync(),
+                Person = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Person
             };
             return View(homePage);
+
         }
     }
 }

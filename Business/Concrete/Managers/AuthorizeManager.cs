@@ -33,6 +33,7 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<AccessToken>(accessToken, "Token Created");
         }
 
+
         public IDataResult<EmployeeSessionDTO> Login(EmployeeLoginDTO employeeLoginDTO)
         {
             EmployeeSessionDTO employeeSession = new EmployeeSessionDTO();
@@ -51,7 +52,7 @@ namespace Business.Concrete.Managers
             return new ErrorDataResult<EmployeeSessionDTO>(default, "User not found");
         }
 
-        //[SecuredOperation("admin,employee.add")]
+        [SecuredOperation("admin,employee.add")]
         public IDataResult<Person> Register(EmployeeRegisterDTO employeeRegisterDTO)
         {
             string message;

@@ -41,5 +41,24 @@ namespace WebUI.Methods.ApiProcessors
             string currentUrl = _url + "gettables";
             return await ApiMethod.GetApiResponse<List<Table>>(ApiClient, currentUrl);
         }
+
+        public async Task<string> SetStatusAsync(Table table)
+        {
+            string currentUrl = _url + "setstatus";
+            return await ApiMethod.PostApiResponse<string, Table>(ApiClient, currentUrl, table);
+        }
+
+        public async Task<Table> GetTableAsync(int tableId)
+        {
+            string currentUrl = _url + "gettable?tableId=" + tableId;
+            return await ApiMethod.GetApiResponse<Table>(ApiClient, currentUrl);
+        }
+
+        public async Task<string> AddTableAsync(Table table)
+        {
+            string currentUrl = _url + "addtable";
+            return await ApiMethod.PostApiResponse<string, Table>(ApiClient, currentUrl, table);
+        }
+
     }
 }

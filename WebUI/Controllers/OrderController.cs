@@ -17,20 +17,20 @@ using WebUI.Models.ViewModels;
 namespace WebUI.Controllers
 {
     //[Authorize]
-    public class OrdersController : Controller
+    public class OrderController : Controller
     {
         string _url = "https://localhost:44396/";
-        OrderDetailsController _orderDetailController;
+        OrderDetailController _orderDetailController;
         ProductProcessor _productProcessor;
         OrderProcessor _orderProcessor;
         TableProcessor _tableProcessor;
 
-        public OrdersController(IHttpContextAccessor contextAccessor)
+        public OrderController(IHttpContextAccessor contextAccessor)
         {
             string accessToken = Token.GetToken(contextAccessor);
             _productProcessor = new ProductProcessor(_url,accessToken);
             _orderProcessor = new OrderProcessor(_url, accessToken);
-            _orderDetailController = new OrderDetailsController(contextAccessor);
+            _orderDetailController = new OrderDetailController(contextAccessor);
             _tableProcessor = new TableProcessor(_url,accessToken);
         }
 
@@ -51,6 +51,9 @@ namespace WebUI.Controllers
             if (HttpContext.Session.GetObject<TabManager>("tab" + tableId) == null)
             {
                 tabManager = new TabManager();
+                Table table = await _tableProcessor.GetTableAsync(tableId);
+                table.Status = false;
+                await _tableProcessor.SetStatusAsync(table);
             }
             else
             {
@@ -71,7 +74,6 @@ namespace WebUI.Controllers
                 TabManager = tabManager
             };
             return View(model);
-            // Order ekranında tabmanager içerisindekileri listelet
         }
 
         [HttpGet]
@@ -96,7 +98,7 @@ namespace WebUI.Controllers
 
             tabManager.Add(tab);
             HttpContext.Session.SetObject("tab" + tableId, tabManager);
-            return RedirectToAction("List", "Orders", new { tableId = tableId, orderDate = orderDate });
+            return RedirectToAction("List", "Order", new { tableId = tableId, orderDate = orderDate });
         }
 
         [HttpGet]
@@ -106,7 +108,7 @@ namespace WebUI.Controllers
 
             tabManager.Delete(id);
 
-            return RedirectToAction("List", "Orders", tableId);
+            return RedirectToAction("List", "Order", tableId);
         }
 
         [HttpPost]
@@ -116,7 +118,7 @@ namespace WebUI.Controllers
 
             tabManager.Update(amounts);
 
-            return RedirectToAction("Orders", "Add");
+            return RedirectToAction("Order", "Add");
         }
 
         [HttpGet]
@@ -150,6 +152,10 @@ namespace WebUI.Controllers
                     _orderDetailController.AddOrderDetail(orderDetail);
                 }
             }
+            Table table = await _tableProcessor.GetTableAsync(tableId);
+            table.Status = true;
+            await _tableProcessor.SetStatusAsync(table);
+
             return RedirectToAction("Index", "Home");
         }
     }

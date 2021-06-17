@@ -50,6 +50,37 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpPost("setstatus")]
+        public IActionResult SetStatus(Table table)
+        {
+            var result = _tableService.Update(table);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("gettable")]
+        public IActionResult GetTable(int tableId)
+        {
+            var result = _tableService.GetTable(tableId);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+        
+        [HttpPost("addtable")]
+        public IActionResult AddTable(Table table)
+        {
+            var result = _tableService.Add(table);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
         
     }
 }

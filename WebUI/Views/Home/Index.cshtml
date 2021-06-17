@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 p-2">
-                <div class="card rounded-3">
+                <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Anlık Satış</h5>
                         <p class="card-text">@Model.OrderAmounts.ToString("C2")</p>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-lg-6 p-2">
-                <div class="card rounded-3">
+                <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Anlık Müşteri</h5>
                         <p class="card-text">@Model.TableStatus.chairCount</p>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-lg-6 p-2">
-                <div class="card rounded-3">
+                <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Kapasite</h5>
                         <p class="card-text">
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-lg-6 p-2">
-                <div class="card rounded-3">
+                <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Card4</h5>
                         <p class="card-text">Card4</p>
@@ -49,7 +49,7 @@
 
         <div class="row">
             <div class="p-2">
-                <div class="card rounded-3">
+                <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Son İşlemler</h5>
                         <p class="card-text">
@@ -107,3 +107,7 @@
         }
     });
 </script>
+
+@section UserInfo{ 
+    Hoşgeldin @Model.Person.FirstName
+}

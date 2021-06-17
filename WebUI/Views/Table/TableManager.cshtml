@@ -1,0 +1,71 @@
+﻿@model TableViewModel
+
+@{
+    ViewData["Title"] = "TableManager";
+}
+<div class="row col-md-12">
+    <div class="col-md-10">
+        <h1>Masa Yönetimi</h1>
+    </div>
+    <div class="col-md-2 p-2">
+        <th><a asp-action="AddTable" class="btn btn-primary">Masa Ekle</a></th>
+    </div>
+</div>
+<hr />
+<table class="table table-bordered shadow-sm rounded-3">
+    <thead>
+        <tr>
+            <th>Masa No</th>
+            <th>Sandalye Sayısı</th>
+            <th>Durumu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var table in Model.Tables)
+        {
+            <tr>
+                <td>
+                    <label asp-for="@table.TableID" class="form-label">@table.TableID</label>
+                </td>
+                <td>
+                    <input asp-for="@table.ChairCount" class="form-control" />
+                </td>
+                <td>
+                    @if (table.Status)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="@table.TableID" asp-for="@table.Status" name="statu_@table.TableID" id="true" checked>
+                            <label class="form-check-label" for="statu_@table.TableID">
+                                Boş
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="@table.TableID" asp-for="@table.Status" name="statu_@table.TableID" id="false">
+                            <label class="form-check-label" for="statu_@table.TableID">
+                                Dolu
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="@table.TableID" asp-for="@table.Status" name="statu_@table.TableID" id="true">
+                            <label class="form-check-label" for="statu_@table.TableID">
+                                Boş
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="@table.TableID" asp-for="@table.Status" name="statu_@table.TableID" id="false" checked>
+                            <label class="form-check-label" for="statu_@table.TableID">
+                                Dolu
+                            </label>
+                        </div>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

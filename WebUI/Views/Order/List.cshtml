@@ -4,9 +4,8 @@
     ViewBag.Title = "Index";
 }
 
-<h1>Add</h1>
+<h1>Masa-Sipariş Yönetimi</h1>
 
-<h4>Order</h4>
 <hr />
 <div class="col-md-12 row">
     <div class="col-md-9">
@@ -25,7 +24,7 @@
                         <td>@product.ProductID</td>
                         <td>@product.ProductName</td>
                         <td>@product.UnitPrice.ToString("C2")</td>
-                        <td colspan="2"><a asp-action="AddTab" asp-controller="Orders" asp-route-productId="@product.ProductID" asp-route-tableId="@Model.Order.TableId" asp-route-orderDate="@Model.Order.OrderDate" class="btn btn-primary">Adisyona Ekle</a></td>
+                        <td colspan="2"><a asp-action="AddTab" asp-controller="Order" asp-route-productId="@product.ProductID" asp-route-tableId="@Model.Order.TableId" asp-route-orderDate="@Model.Order.OrderDate" class="btn btn-primary">Adisyona Ekle</a></td>
                     </tr>
                 }
             </tbody>
@@ -66,7 +65,7 @@
                         }
                     </tbody>
                 </table>
-                <a asp-action="OrderCheckout" asp-controller="Orders" asp-route-tableId="@Model.Order.TableId"  class="btn btn-success">Siparişi Tamamla</a>
+                <a asp-action="OrderCheckout" asp-controller="Order" asp-route-tableId="@Model.Order.TableId"  class="btn btn-success">Siparişi Tamamla</a>
 
             </div>
         </div>

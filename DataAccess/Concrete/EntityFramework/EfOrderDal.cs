@@ -25,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CompanyContext db = new CompanyContext())
             {
-                return filter == null ? db.Set<Order>().ToList() : db.Set<Order>().Where(filter).Take(takeValue).ToList();
+                return filter == null ? db.Set<Order>().OrderByDescending(x=>x.OrderDate).ToList() : db.Set<Order>().Where(filter).OrderByDescending(x => x.OrderDate).Take(takeValue).ToList();
             }
         }
     }

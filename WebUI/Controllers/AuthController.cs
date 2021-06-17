@@ -37,13 +37,13 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Login(EmployeeLoginDTO employeeLoginDTO)
         {
             var result = await _authProcessor.LoginAsync(employeeLoginDTO);
+
             List<Claim> claims = new List<Claim>();
             claims.AddNameIdentifier(result.Employee.EmployeeID.ToString());
             claims.AddName($"{result.Person.FirstName} {result.Person.LastName}");
             ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(principal);
-
 
             HttpContext.Session.SetObject("user", result);
             return RedirectToAction("Index", "Home");

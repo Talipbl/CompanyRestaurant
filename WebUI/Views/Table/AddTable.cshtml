@@ -1,0 +1,28 @@
+﻿@model Entities.Concrete.Table
+
+@{
+    ViewData["Title"] = "AddTable";
+}
+
+<h1>Masa Oluştur</h1>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddTable" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ChairCount" class="control-label">Sandalye Sayısı</label><br />
+                    <input asp-for="ChairCount" class="form-control" />
+                    <span asp-validation-for="ChairCount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <input type="submit" value="Oluştur" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

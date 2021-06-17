@@ -10,12 +10,12 @@ using WebUI.Methods.ApiProcessors;
 
 namespace WebUI.Controllers
 {
-    public class OrderDetailsController : Controller
+    public class OrderDetailController : Controller
     {
         string _url = "https://localhost:44396/";
         OrderDetailProcessor _orderDetailProcessor;
 
-        public OrderDetailsController(IHttpContextAccessor contextAccessor)
+        public OrderDetailController(IHttpContextAccessor contextAccessor)
         {
             string accessToken = Token.GetToken(contextAccessor);
             _orderDetailProcessor = new OrderDetailProcessor(_url,accessToken);
