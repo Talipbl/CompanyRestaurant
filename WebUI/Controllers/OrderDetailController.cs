@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Methods;
-using WebUI.Methods.ApiProcessors;
+using WebUI.ApiControllers.ApiProcessors;
 
 namespace WebUI.Controllers
 {
@@ -17,7 +17,7 @@ namespace WebUI.Controllers
 
         public OrderDetailController(IHttpContextAccessor contextAccessor)
         {
-            string accessToken = Token.GetToken(contextAccessor);
+            string accessToken = TokenHelper.GetToken(contextAccessor);
             _orderDetailProcessor = new OrderDetailProcessor(_url,accessToken);
 
         }

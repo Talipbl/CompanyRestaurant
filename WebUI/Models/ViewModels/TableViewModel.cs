@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUI.Models.DataTransferObjects;
 
 namespace WebUI.Models.ViewModels
 {
     public class TableViewModel
     {
-        public List<Table> Tables { get; set; }
+        public ResponseDTO<List<Table>> Tables { get; set; }
     }
 }

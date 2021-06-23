@@ -10,10 +10,10 @@ namespace WebUI.Models.DataTransferObjects
 {
     public class HomepageDTO
     {
-        public List<Product> Products { get; set; }
-        public TablesStatusDTO TableStatus { get; set; }
-        public decimal OrderAmounts { get; set; }
-        public List<Order> LastOrders { get; set; }
+        public ResponseDTO<List<Product>> Products { get; set; }
+        public ResponseDTO<TablesStatusDTO> TableStatus { get; set; }
+        public ResponseDTO<decimal> OrderAmounts { get; set; }
+        public ResponseDTO<List<Order>> LastOrders { get; set; }
         public Person Person { get; set; }
     }
 }

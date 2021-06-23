@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Methods;
-using WebUI.Methods.ApiProcessors;
+using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models;
 using WebUI.Models.DataTransferObjects;
 using WebUI.Models.Managers;
@@ -27,7 +27,7 @@ namespace WebUI.Controllers
 
         public OrderController(IHttpContextAccessor contextAccessor)
         {
-            string accessToken = Token.GetToken(contextAccessor);
+            string accessToken = TokenHelper.GetToken(contextAccessor);
             _productProcessor = new ProductProcessor(_url,accessToken);
             _orderProcessor = new OrderProcessor(_url, accessToken);
             _orderDetailController = new OrderDetailController(contextAccessor);
@@ -51,9 +51,9 @@ namespace WebUI.Controllers
             if (HttpContext.Session.GetObject<TabManager>("tab" + tableId) == null)
             {
                 tabManager = new TabManager();
-                Table table = await _tableProcessor.GetTableAsync(tableId);
-                table.Status = false;
-                await _tableProcessor.SetStatusAsync(table);
+                ResponseDTO<Table> table = await _tableProcessor.GetTableAsync(tableId);
+                table.Entity.Status = false;
+                await _tableProcessor.SetStatusAsync(table.Entity);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace WebUI.Controllers
             OrderViewModel model = new OrderViewModel()
             {
                 Order = order,
-                Products = (await _productProcessor.GetProductsAsync()).ToList(),
+                Products = (await _productProcessor.GetProductsAsync()).Entity.ToList(),
                 TabManager = tabManager
             };
             return View(model);
@@ -89,12 +89,12 @@ namespace WebUI.Controllers
                 tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
             }
 
-            Product product = await _productProcessor.GetProductAsync(productId);
+            ResponseDTO<Product> product = await _productProcessor.GetProductAsync(productId);
             Tab tab = new Tab();
 
-            tab.ID = product.ProductID;
-            tab.Name = product.ProductName;
-            tab.SubPrice = (decimal)product.UnitPrice;
+            tab.ID = product.Entity.ProductID;
+            tab.Name = product.Entity.ProductName;
+            tab.SubPrice = (decimal)product.Entity.UnitPrice;
 
             tabManager.Add(tab);
             HttpContext.Session.SetObject("tab" + tableId, tabManager);
@@ -136,10 +136,10 @@ namespace WebUI.Controllers
                 OrderDate = dateTime.DateTime,
                 TotalPrice = tabManager.TotalPrice
             };
-            if((await _orderProcessor.AddOrderAsync(order))!="")
+            if((await _orderProcessor.AddOrderAsync(order)).Entity!="")
             {
-                Order savedOrder = await _orderProcessor.GetLastOrderAsync();
-                int orderId = savedOrder.OrderID;
+                ResponseDTO<Order> savedOrder = await _orderProcessor.GetLastOrderAsync();
+                int orderId = savedOrder.Entity.OrderID;
                 for (int i = 0; i < tabManager.Tabs.Count; i++)
                 {
                     OrderDetail orderDetail = new OrderDetail()
@@ -152,9 +152,9 @@ namespace WebUI.Controllers
                     _orderDetailController.AddOrderDetail(orderDetail);
                 }
             }
-            Table table = await _tableProcessor.GetTableAsync(tableId);
-            table.Status = true;
-            await _tableProcessor.SetStatusAsync(table);
+            ResponseDTO<Table> table = await _tableProcessor.GetTableAsync(tableId);
+            table.Entity.Status = true;
+            await _tableProcessor.SetStatusAsync(table.Entity);
 
             return RedirectToAction("Index", "Home");
         }

@@ -12,12 +12,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebUI.Methods;
-using WebUI.Methods.ApiProcessors;
+using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.DataTransferObjects;
 
 namespace WebUI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         string _url = "https://localhost:44396/";
@@ -28,10 +28,10 @@ namespace WebUI.Controllers
 
         public HomeController(IHttpContextAccessor contextAccessor)
         {
-            _productProcessor = new ProductProcessor(_url, Token.GetToken(contextAccessor));
-            _tableProcessor = new TableProcessor(_url, Token.GetToken(contextAccessor));
-            _orderProcessor = new OrderProcessor(_url, Token.GetToken(contextAccessor));
-            _personProcessor = new PersonProcessor(_url, Token.GetToken(contextAccessor));
+            _productProcessor = new ProductProcessor(_url, TokenHelper.GetToken(contextAccessor));
+            _tableProcessor = new TableProcessor(_url, TokenHelper.GetToken(contextAccessor));
+            _orderProcessor = new OrderProcessor(_url, TokenHelper.GetToken(contextAccessor));
+            _personProcessor = new PersonProcessor(_url, TokenHelper.GetToken(contextAccessor));
 
         }
 

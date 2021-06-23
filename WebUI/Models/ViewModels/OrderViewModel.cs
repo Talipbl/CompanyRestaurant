@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUI.Models.DataTransferObjects;
 using WebUI.Models.Managers;
 
-namespace WebUI.Models.DataTransferObjects
+namespace WebUI.Models.ViewModels
 {
     public class OrderViewModel
     {

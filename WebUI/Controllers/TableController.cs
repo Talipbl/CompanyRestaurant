@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Methods;
-using WebUI.Methods.ApiProcessors;
+using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.ViewModels;
 
 namespace WebUI.Controllers
@@ -18,7 +18,7 @@ namespace WebUI.Controllers
 
         public TableController(IHttpContextAccessor contextAccessor)
         {
-            string accessToken = Token.GetToken(contextAccessor);
+            string accessToken = TokenHelper.GetToken(contextAccessor);
             _tableProcessor = new TableProcessor(_url, accessToken);
         }
 

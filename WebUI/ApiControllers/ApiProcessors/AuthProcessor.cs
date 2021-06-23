@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WebUI.Methods;
+using WebUI.Models.DataTransferObjects;
 
-namespace WebUI.Methods.ApiProcessors
+namespace WebUI.ApiControllers.ApiProcessors
 {
     public class AuthProcessor
     {
@@ -17,15 +19,13 @@ namespace WebUI.Methods.ApiProcessors
         public AuthProcessor(string url)
         {
             _url = url + "api/auth/";
-            ApiClient = new HttpClient();
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            ApiClient = ApiClientHelper.CreateApiClient(ApiClient);
         }
 
-        public async Task<EmployeeSessionDTO> LoginAsync(EmployeeLoginDTO employeeLogin)
+        public async Task<ResponseDTO<EmployeeSessionDTO>> LoginAsync(EmployeeLoginDTO employeeLogin)
         {
             string currentUrl = _url + "login";
-            return await ApiMethod.PostApiResponse<EmployeeSessionDTO,EmployeeLoginDTO>(ApiClient, currentUrl, employeeLogin);
+            return await ApiHelper.PostApiResponse<EmployeeSessionDTO,EmployeeLoginDTO>(ApiClient, currentUrl, employeeLogin);
         }
     }
 }

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WebUI.Methods;
+using WebUI.Models.DataTransferObjects;
 
-namespace WebUI.Methods.ApiProcessors
+namespace WebUI.ApiControllers.ApiProcessors
 {
     public class PersonProcessor
     {
@@ -16,16 +18,13 @@ namespace WebUI.Methods.ApiProcessors
         public PersonProcessor(string url, string accessToken)
         {
             _url = url + "api/persons/";
-            ApiClient = new HttpClient();
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            ApiClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 
-        public async Task<Person> GetPerson(int personId)
+        public async Task<ResponseDTO<Person>> GetPerson(int personId)
         {
             string currentUrl = _url + "getperson";
-            return await ApiMethod.GetApiResponse<Person>(ApiClient, currentUrl);
+            return await ApiHelper.GetApiResponse<Person>(ApiClient, currentUrl);
         }
 
     }

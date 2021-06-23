@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebUI.Methods;
-using WebUI.Methods.ApiProcessors;
+using WebUI.ApiControllers.ApiProcessors;
 using Core.Utilities.Extensions;
 
 namespace WebUI.Controllers
@@ -39,8 +39,8 @@ namespace WebUI.Controllers
             var result = await _authProcessor.LoginAsync(employeeLoginDTO);
 
             List<Claim> claims = new List<Claim>();
-            claims.AddNameIdentifier(result.Employee.EmployeeID.ToString());
-            claims.AddName($"{result.Person.FirstName} {result.Person.LastName}");
+            claims.AddNameIdentifier(result.Entity.Employee.EmployeeID.ToString());
+            claims.AddName($"{result.Entity.Person.FirstName} {result.Entity.Person.LastName}");
             ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(principal);

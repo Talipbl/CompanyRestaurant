@@ -7,8 +7,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebUI.Methods;
+using WebUI.Models.DataTransferObjects;
 
-namespace WebUI.Methods.ApiProcessors
+namespace WebUI.ApiControllers.ApiProcessors
 {
     public class ProductProcessor
     {
@@ -18,22 +19,19 @@ namespace WebUI.Methods.ApiProcessors
         public ProductProcessor(string url, string accessToken)
         {
             _url = url + "api/products/";
-            ApiClient = new HttpClient();
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            ApiClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 
-        public async Task<List<Product>> GetProductsAsync()
+        public async Task<ResponseDTO<List<Product>>> GetProductsAsync()
         {
             string currentUrl = _url + "getall";
-            return await ApiMethod.GetApiResponse<List<Product>>(ApiClient, currentUrl);
+            return await ApiHelper.GetApiResponse<List<Product>>(ApiClient, currentUrl);
         }
 
-        public async Task<Product> GetProductAsync(int productId)
+        public async Task<ResponseDTO<Product>> GetProductAsync(int productId)
         {
             string currentUrl = _url + "get/productId?productId=" + productId;
-            return await ApiMethod.GetApiResponse<Product>(ApiClient, currentUrl);
+            return await ApiHelper.GetApiResponse<Product>(ApiClient, currentUrl);
         }
     }
 }

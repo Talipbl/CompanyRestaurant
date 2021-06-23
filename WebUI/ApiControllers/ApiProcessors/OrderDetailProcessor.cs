@@ -7,8 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using WebUI.Methods;
 
-namespace WebUI.Methods.ApiProcessors
+namespace WebUI.ApiControllers.ApiProcessors
 {
     public class OrderDetailProcessor
     {
@@ -18,16 +19,13 @@ namespace WebUI.Methods.ApiProcessors
         public OrderDetailProcessor(string url, string accessToken)
         {
             _url = url + "api/orderdetails/";
-            ApiClient = new HttpClient();
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-            ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            ApiClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 
         public async void AddOrderDetailAsync(OrderDetail orderDetail)
         {
             string currentUrl = _url + "add";
-            await ApiMethod.PostApiResponse<string, OrderDetail>(ApiClient, currentUrl, orderDetail);
+            await ApiHelper.PostApiResponse<string, OrderDetail>(ApiClient, currentUrl, orderDetail);
         }
 
     }

@@ -15,7 +15,7 @@
                 <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Anlık Satış</h5>
-                        <p class="card-text">@Model.OrderAmounts.ToString("C2")</p>
+                        <p class="card-text">@Model.OrderAmounts.Entity.ToString("C2")</p>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="card shadow p-3 mb-5 bg-body rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Anlık Müşteri</h5>
-                        <p class="card-text">@Model.TableStatus.chairCount</p>
+                        <p class="card-text">@Model.TableStatus.Entity.chairCount</p>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var order in Model.LastOrders)
+                                    @foreach (var order in Model.LastOrders.Entity)
                                     {
                                         <tr>
                                             <td>@order.OrderID</td>
@@ -85,7 +85,7 @@
 
 <script>
     var xValues = ["Dolu", "Boş"];
-    var yValues = [@Model.TableStatus.falseValue, @Model.TableStatus.trueValue];
+    var yValues = [@Model.TableStatus.Entity.falseValue, @Model.TableStatus.Entity.trueValue];
     var barColors = [
         "#b91d47",
         "#81b214",

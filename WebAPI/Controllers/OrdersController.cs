@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
         {
             return BaseProcess(_orderService.Delete(id));
         }
-        [HttpPost("getorderbytime")]
+        [HttpGet("getorderbytime")]
         public IActionResult GetOrderByDateTime(DateTimeDTO dateTime)
         {
             var result = _orderService.GetOrderByDateTime(dateTime.DateTime);

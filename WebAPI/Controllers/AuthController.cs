@@ -32,13 +32,14 @@ namespace WebAPI.Controllers
                 return BadRequest(userExists.Message);
             }
             var registerResult = _auhthorizeService.Register(employeeRegisterDTO);
-            var result = _auhthorizeService.CreateAccessToken(registerResult.Data);
-            if (result.Success)
+            //var result = _auhthorizeService.CreateAccessToken(registerResult.Data);
+            if (registerResult.Success)
             {
-                return Ok(result);
+                return Ok(registerResult.Message);
             }
-            return BadRequest(result.Message);
+            return BadRequest(registerResult.Message);
         }
+
 
         [HttpPost("login")]
         public IActionResult Login(EmployeeLoginDTO employeeLoginDTO)
