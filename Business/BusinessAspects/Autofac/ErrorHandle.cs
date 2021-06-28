@@ -9,6 +9,9 @@ namespace Business.BusinessAspects.Autofac
 {
     public class ErrorHandle : MethodInterception
     {
-
+        protected override void OnException(IInvocation invocation, Exception e)
+        {
+            base.OnException(invocation, e);
+        }
     }
 }

@@ -17,6 +17,7 @@ using System.Text;
 
 namespace Business.Concrete.Managers
 {
+    [ErrorHandle]
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
@@ -72,9 +73,9 @@ namespace Business.Concrete.Managers
             return new SuccessDataResult<Product>(_productDal.Get(x => x.ProductID == productId), Messages.Product.Listed);
         }
 
-        public IDataResult<List<Product>> GetProducts()
+        public IDataResult<List<ProductsDTO>> GetProducts()
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.Product.ProductsListed);
+            return new SuccessDataResult<List<ProductsDTO>>(_productDal.GetProductsWithCategory(), Messages.Product.ProductsListed);
         }
 
         public IDataResult<List<Product>> GetProductsByCategory(int categoryId)

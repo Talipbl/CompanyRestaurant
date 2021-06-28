@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.DataTransferObjects;
+using WebUI.Models.ViewModels;
 
 namespace WebUI.Controllers
 {
@@ -32,18 +33,17 @@ namespace WebUI.Controllers
             _tableProcessor = new TableProcessor(_url, TokenHelper.GetToken(contextAccessor));
             _orderProcessor = new OrderProcessor(_url, TokenHelper.GetToken(contextAccessor));
             _personProcessor = new PersonProcessor(_url, TokenHelper.GetToken(contextAccessor));
-
         }
 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            HomepageDTO homePage = new HomepageDTO()
+            HomepageViewModel homePage = new HomepageViewModel()
             {
                 TableStatus = await _tableProcessor.GetTableStatusAsync(),
                 OrderAmounts = await _orderProcessor.GetOrdersAmountAsync(),
                 LastOrders = await _orderProcessor.GetLastOrdersAsync(),
-                Person = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Person
+                Person = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Person
             };
             return View(homePage);
 

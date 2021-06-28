@@ -16,7 +16,7 @@ using WebUI.Models.ViewModels;
 
 namespace WebUI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class OrderController : Controller
     {
         string _url = "https://localhost:44396/";
@@ -57,10 +57,10 @@ namespace WebUI.Controllers
             }
             else
             {
-                tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
+                tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
             }
             Order order = new Order();
-            order.EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Employee.EmployeeID;
+            order.EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID;
             order.TableId = tableId;
             if (orderDate.Year == 0001)
             {
@@ -86,7 +86,7 @@ namespace WebUI.Controllers
             }
             else
             {
-                tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
+                tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
             }
 
             ResponseDTO<Product> product = await _productProcessor.GetProductAsync(productId);
@@ -104,7 +104,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public ActionResult DeleteTab(int id, int tableId)
         {
-            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
+            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
 
             tabManager.Delete(id);
 
@@ -114,7 +114,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public ActionResult UpdateTab(int tableId, params short[] amounts)
         {
-            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
+            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
 
             tabManager.Update(amounts);
 
@@ -124,19 +124,19 @@ namespace WebUI.Controllers
         [HttpGet]
         public async Task<ActionResult> OrderCheckout(int tableId)
         {
-            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId) as TabManager;
+            TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
             DateTimeDTO dateTime = new DateTimeDTO()
             {
                 DateTime = DateTime.Now
             };
             Order order = new Order()
             {
-                EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Employee.EmployeeID,
+                EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID,
                 TableId = tableId,
                 OrderDate = dateTime.DateTime,
                 TotalPrice = tabManager.TotalPrice
             };
-            if((await _orderProcessor.AddOrderAsync(order)).Entity!="")
+            if((await _orderProcessor.AddOrderAsync(order)).ResponseMessage.IsSuccessStatusCode)
             {
                 ResponseDTO<Order> savedOrder = await _orderProcessor.GetLastOrderAsync();
                 int orderId = savedOrder.Entity.OrderID;
@@ -155,6 +155,8 @@ namespace WebUI.Controllers
             ResponseDTO<Table> table = await _tableProcessor.GetTableAsync(tableId);
             table.Entity.Status = true;
             await _tableProcessor.SetStatusAsync(table.Entity);
+
+            HttpContext.Session.Remove("tab" + tableId);
 
             return RedirectToAction("Index", "Home");
         }

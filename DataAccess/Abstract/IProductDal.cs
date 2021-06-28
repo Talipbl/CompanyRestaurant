@@ -12,5 +12,7 @@ namespace DataAccess.Abstract
         //Object specific actions
 
         List<RecipeProductDTO> GetProductsByRecipe(int recipeId);
+
+        List<ProductsDTO> GetProductsWithCategory();
     }
 }

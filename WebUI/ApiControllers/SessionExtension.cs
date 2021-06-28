@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUI.Models.DataTransferObjects;
 
 namespace WebUI.Methods
 {
@@ -14,12 +15,14 @@ namespace WebUI.Methods
             string jsonValue = JsonConvert.SerializeObject(value);
             session.SetString(key, jsonValue);
         }
-        public static T GetObject<T>(this ISession session, string key) where T:class
+        public static ResponseDTO<T> GetObject<T>(this ISession session, string key) where T:class, new()
         {
+            ResponseDTO<T> response = new ResponseDTO<T>();
+
             string jsonValue = session.GetString(key);
             if (string.IsNullOrEmpty(jsonValue)) return null;
-            T value = JsonConvert.DeserializeObject<T>(jsonValue);
-            return value;
+            response.Entity = JsonConvert.DeserializeObject<T>(jsonValue);
+            return response;
         }
     }
 }

@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class PersonController : Controller
     {
         string _url = "https://localhost:44396/";

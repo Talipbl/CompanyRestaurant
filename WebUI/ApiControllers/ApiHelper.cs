@@ -21,7 +21,7 @@ namespace WebUI.Methods
             {
                 ResponseMessage = await ApiClient.GetAsync(currentUrl)
             };
-            string result = await response.ResponseMessage.Content.ReadAsStringAsync();
+            var result = await response.ResponseMessage.Content.ReadAsStringAsync();
             T value = JsonConvert.DeserializeObject<T>(result);
             response.Entity = value;
             return response;

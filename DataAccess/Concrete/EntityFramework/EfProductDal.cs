@@ -32,12 +32,40 @@ namespace DataAccess.Concrete.EntityFramework
                    };
         }
 
+        private static IQueryable<ProductsDTO> GetProductsWithJoin(CompanyContext context)
+        {
+            return from p in context.Products
+                   join c in context.Categories on p.CategoryId equals c.CategoryID
+
+                   select new ProductsDTO
+                   {
+                       ProductID = p.ProductID,
+                       CategoryId = p.Category.CategoryID,
+                       CategoryName = p.Category.CategoryName,
+                       ProductName = p.ProductName,
+                       UnitPrice = p.UnitPrice,
+                       UnitsInRestaurantStock = p.UnitsInRestaurantStock,
+                       UnitsInWarhouseStock = p.UnitsInWarhouseStock,
+                       Discontinued = p.Discontinued
+                   };
+        }
+
         public List<RecipeProductDTO> GetProductsByRecipe(int recipeId)
         {
-            using (CompanyContext context = new CompanyContext())
+            using (CompanyContext db = new CompanyContext())
             {
-                IQueryable<RecipeProductDTO> result = GetProductsByRecipeIdWithJoin(context, recipeId);
+                IQueryable<RecipeProductDTO> result = GetProductsByRecipeIdWithJoin(db, recipeId);
                 return result.ToList();
+            }
+        }
+
+        public List<ProductsDTO> GetProductsWithCategory()
+        {
+            using (CompanyContext db = new CompanyContext())
+            {
+                IQueryable<ProductsDTO> result = GetProductsWithJoin(db);
+                return result.ToList();
+                //return db.Set<Product>().Include(x => x.Category).ToList();
             }
         }
     }

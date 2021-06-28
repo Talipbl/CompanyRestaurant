@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Concrete.DataTransferObject;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,21 @@ namespace WebUI.ApiControllers.ApiProcessors
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 
-        public async Task<ResponseDTO<List<Product>>> GetProductsAsync()
+        public async Task<ResponseDTO<List<ProductsDTO>>> GetProductsAsync()
         {
             string currentUrl = _url + "getall";
-            return await ApiHelper.GetApiResponse<List<Product>>(ApiClient, currentUrl);
+            return await ApiHelper.GetApiResponse<List<ProductsDTO>>(ApiClient, currentUrl);
         }
 
         public async Task<ResponseDTO<Product>> GetProductAsync(int productId)
         {
             string currentUrl = _url + "get/productId?productId=" + productId;
             return await ApiHelper.GetApiResponse<Product>(ApiClient, currentUrl);
+        }
+        public async Task<ResponseDTO<string>> AddProductAsync(Product product)
+        {
+            string currentUrl = _url + "add";
+            return await ApiHelper.PostApiResponse<string, Product>(ApiClient, currentUrl, product);
         }
     }
 }

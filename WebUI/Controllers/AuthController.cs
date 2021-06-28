@@ -45,7 +45,7 @@ namespace WebUI.Controllers
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(principal);
 
-            HttpContext.Session.SetObject("user", result);
+            HttpContext.Session.SetObject("user", result.Entity);
             return RedirectToAction("Index", "Home");
         }
 

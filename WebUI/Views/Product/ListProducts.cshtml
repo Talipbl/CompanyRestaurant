@@ -1,0 +1,32 @@
+﻿@model ListProductsViewModel
+@{
+    ViewData["Title"] = "ListProducts";
+}
+
+<h1>Ürünler</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Kategori</th>
+            <th>Birim Fiyatı</th>
+            <th>Restaurant Stok</th>
+            <th>Depo Stok</th>
+            <th>Satış Durumu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products.Entity)
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.CategoryName</td>
+                <td>@product.UnitPrice.ToString("C2")</td>
+                <td>@product.UnitsInRestaurantStock</td>
+                <td>@product.UnitsInWarhouseStock</td>
+                <td>@(product.Discontinued == false ? "Satışa Açık" : "Satışa Kapalı")</td>
+            </tr>
+        }
+    </tbody>
+</table>

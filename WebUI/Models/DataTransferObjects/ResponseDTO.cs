@@ -8,10 +8,6 @@ namespace WebUI.Models.DataTransferObjects
 {
     public class ResponseDTO<TEntity>
     {
-        public ResponseDTO()
-        {
-            ResponseMessage = new HttpResponseMessage();
-        }
         public HttpResponseMessage ResponseMessage { get; set; }
         public TEntity Entity { get; set; }
     }

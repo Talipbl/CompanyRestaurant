@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebUI.Controllers
 {
+   [Authorize]
     public class TableController : Controller
     {
         string _url = "https://localhost:44396/";
