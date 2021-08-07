@@ -10,7 +10,17 @@
 <div class="row p-3">
     <div class="col-md-4">
         <form asp-action="AddProduct">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+                @if (Model.Errors != null)
+                {
+                    <ul>
+                        @foreach (var error in Model.Errors)
+                        {
+                            <li>@error.ToString()</li>
+                        }
+                    </ul>
+                }
+            </div>
             <div class="form-group">
                 <input asp-for="Product.ProductID" class="form-control" type="hidden" />
             </div>
@@ -35,7 +45,7 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Product.Discontinued" /> Satış Açık
+                    <input class="form-check-input" asp-for="Product.Discontinued" /> Satış Kapalı
                 </label>
             </div>
             <div class="form-group">

@@ -12,34 +12,17 @@
     <div class="row">
         @foreach (var table in Model.Tables.Entity)
         {
-
-            if (!table.Status)
-            {
-                <div class="col m-3">
-                    <div class="card" style="width: 18rem;">
-                        <h4 class="card-header" style="background-color: indianred">Masa @table.TableID</h4>
-                        <div class="card-body">
-                            <h5 class="card-title">@table.Status</h5>
-                            <p class="card-text">Sandalye Sayısı: @table.ChairCount</p>
-                            <a asp-action="List" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
-                        </div>
+            <div class="col m-3">
+                <div class="card" style="width: 18rem;">
+                    <h4 class="card-header" style="background-color: @(table.Status==true? "aquamarine":"indianred") ">Masa @table.TableID</h4>
+                    <div class="card-body">
+                        <h5 class="card-title">@(table.Status==true? "Masa Boş":"Masa Dolu")</h5>
+                        <p class="card-text">Sandalye Sayısı: @table.ChairCount</p>
+                        <a asp-action="List" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
+                        <a asp-action="CancelOrder" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-danger @(table.Status==true? "disabled":"") ">İptal Et</a>
                     </div>
                 </div>
-            }
-            else
-            {
-                <div class="col m-3">
-                    <div class="card" style="width: 18rem;">
-                        <h4 class="card-header" style="background-color: aquamarine">Masa @table.TableID</h4>
-                        <div class="card-body">
-                            <h5 class="card-title">@table.Status</h5>
-                            <p class="card-text">Sandalye Sayısı: @table.ChairCount</p>
-                            <a asp-action="List" asp-controller="Order" asp-route-tableId="@table.TableID" class="btn btn-primary">Seç</a>
-                        </div>
-                    </div>
-                </div>
-                
-            }
+            </div>
         }
 
     </div>

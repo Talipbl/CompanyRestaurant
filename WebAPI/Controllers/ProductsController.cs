@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Concrete.Managers;
+using Core.Entities.DataTransferObject;
 using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -26,9 +28,9 @@ namespace WebAPI.Controllers
         {
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpGet("get/{id}")]
@@ -63,7 +65,7 @@ namespace WebAPI.Controllers
         {
             return BaseProcess(_productService.Update(product));
         }
-        [HttpPost("delete")]
+        [HttpGet("delete")]
         public IActionResult Delete(int id)
         {
             return BaseProcess(_productService.Delete(id));

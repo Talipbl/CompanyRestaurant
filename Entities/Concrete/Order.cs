@@ -12,6 +12,7 @@ namespace Entities.Concrete
         public int TableId { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime OrderDate { get; set; }
+        public string Notes { get; set; }
 
 
         public virtual Employee Employee { get; set; }

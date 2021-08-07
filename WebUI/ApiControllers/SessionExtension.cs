@@ -20,7 +20,10 @@ namespace WebUI.Methods
             ResponseDTO<T> response = new ResponseDTO<T>();
 
             string jsonValue = session.GetString(key);
-            if (string.IsNullOrEmpty(jsonValue)) return null;
+            if (string.IsNullOrEmpty(jsonValue))
+            {
+                return response;
+            }
             response.Entity = JsonConvert.DeserializeObject<T>(jsonValue);
             return response;
         }

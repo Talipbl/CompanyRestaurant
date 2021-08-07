@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Business.Concrete.Managers
 {
-    [ErrorHandle]
+
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
@@ -58,7 +58,7 @@ namespace Business.Concrete.Managers
             var result = CheckIfProductNameExists(product.ProductName);
             if (result.Success)
             {
-                return BaseProcess(_productDal.Add(product),Messages.Product.Added);
+                return new ValidationDataResult(_productDal.Add(product), Messages.Product.Added);
             }
             return result;
         }

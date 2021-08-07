@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.Aspects.Autofac.ErrorHandle;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Core.DataAccess.EntityFramework
         where TContext : DbContext, new()
     {
         //Base Database Operations
-
+        //[ErrorHandleAspect]
         private int TContextEntry(TEntity entity, EntityState state)
         {
             using (TContext db = new TContext())
@@ -27,7 +28,6 @@ namespace Core.DataAccess.EntityFramework
         {
             return TContextEntry(entity, EntityState.Added) > 0 ? true : false;
         }
-
         public bool Delete(TEntity entity)
         {
             return TContextEntry(entity, EntityState.Deleted) > 0 ? true : false;

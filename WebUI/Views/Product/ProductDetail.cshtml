@@ -1,0 +1,101 @@
+﻿@model ProductManipulationViewModel
+
+@{
+    ViewData["Title"] = "ProductDetail";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<h1>ProductDetail</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="ProductDetail" class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.ProductID" class="control-label"></label>
+                <input asp-for="Product.ProductID" class="form-control" />
+                <span asp-validation-for="Product.ProductID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductName" class="control-label"></label>
+                <input asp-for="Product.ProductName" class="form-control" />
+                <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId" class="control-label"></label>
+                <input asp-for="Product.CategoryId" class="form-control" />
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.UnitPrice" class="control-label"></label>
+                <input asp-for="Product.UnitPrice" class="form-control" />
+                <span asp-validation-for="Product.UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.UnitsInRestaurantStock" class="control-label"></label>
+                <input asp-for="Product.UnitsInRestaurantStock" class="form-control" />
+                <span asp-validation-for="Product.UnitsInRestaurantStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.UnitsInWarhouseStock" class="control-label"></label>
+                <input asp-for="Product.UnitsInWarhouseStock" class="form-control" />
+                <span asp-validation-for="Product.UnitsInWarhouseStock" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.Discontinued" /> @Html.DisplayNameFor(model => model.Product.Discontinued)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <ul class="nav nav-tabs m-1 p-3" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="stock-detail-tab" data-bs-toggle="tab" data-bs-target="#stock" type="button" role="tab" aria-controls="home" aria-selected="true">Stok Detay</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sale-tab" data-bs-toggle="tab" data-bs-target="#sale" type="button" role="tab" aria-controls="profile" aria-selected="false">Satış Detay</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="order-detail-tab" data-bs-toggle="tab" data-bs-target="#order" type="button" role="tab" aria-controls="contact" aria-selected="false">Sipariş Detay</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="recipe-tab" data-bs-toggle="tab" data-bs-target="#recipe" type="button" role="tab" aria-controls="contact" aria-selected="false">Menü Detay</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="stock" role="tabpanel" aria-labelledby="stock-detail-tab">
+                <div class="col-md-4d">
+                    <label asp-for="Product.UnitsInRestaurantStock" class="control-label"></label>
+                    <input asp-for="Product.UnitsInRestaurantStock" class="form-control disabled" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Product.UnitsInWarhouseStock" class="control-label"></label>
+                    <input asp-for="Product.UnitsInWarhouseStock" class="form-control disabled" />
+                </div>
+            </div>
+            <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
+                sdgdfgdfgdf
+            </div>
+            <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-detail-tab">
+                hjhgnfdhngffgdndhfhbdfdgdfgdfg
+            </div>
+            <div class="tab-pane fade" id="recipe" role="tabpanel" aria-labelledby="recipe-tab">
+                51198116516
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<br />
+

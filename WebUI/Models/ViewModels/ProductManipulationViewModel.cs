@@ -10,6 +10,7 @@ namespace WebUI.Models.ViewModels
     public class ProductManipulationViewModel
     {
         public Product Product { get; set; }
-        public List<Category>Categories { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<string> Errors { get; set; }
     }
 }

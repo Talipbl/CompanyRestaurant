@@ -65,7 +65,10 @@
                         }
                     </tbody>
                 </table>
-                <a asp-action="OrderCheckout" asp-controller="Order" asp-route-tableId="@Model.Order.TableId"  class="btn btn-success">Siparişi Tamamla</a>
+                @if (Model.TabManager.TabsDictionary.Count>0)
+                {
+                    <a asp-action="OrderCheckout" asp-controller="Order" asp-route-tableId="@Model.Order.TableId" class="btn btn-success">Siparişi Tamamla</a>
+                }
 
             </div>
         </div>

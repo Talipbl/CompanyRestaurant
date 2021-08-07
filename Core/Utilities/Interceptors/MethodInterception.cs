@@ -10,6 +10,7 @@ namespace Core.Utilities.Interceptors
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public class MethodInterception : Attribute, IInterceptor
     {
+        protected bool IsSuccess;
         protected virtual void OnBefore(IInvocation invocation) { }
         protected virtual void OnAfter(IInvocation invocation) { }
         protected virtual void OnException(IInvocation invocation, System.Exception e) { }
@@ -17,7 +18,7 @@ namespace Core.Utilities.Interceptors
 
         public void Intercept(IInvocation invocation)
         {
-            var isSuccess = true;
+            IsSuccess = true;
             OnBefore(invocation);
             try
             {
@@ -25,13 +26,13 @@ namespace Core.Utilities.Interceptors
             }
             catch (Exception e)
             {
-                isSuccess = false;
+                IsSuccess = false;
                 OnException(invocation, e);
-                throw;
+                //throw;
             }
             finally
             {
-                if (isSuccess)
+                if (IsSuccess)
                 {
                     OnSuccess(invocation);
                 }

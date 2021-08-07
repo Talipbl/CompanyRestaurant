@@ -1,0 +1,34 @@
+﻿@model ListOrdersViewModel
+@{
+    ViewData["Title"] = "ListOrders";
+}
+
+<h1>ListOrders</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Sipariş No</th>
+            <th>Masa No</th>
+            <th>Sipariş Tarihi</th>
+            <th>Sipariş Tutarı</th>
+            <th>Personel Sicil</th>
+            <th>Sipariş Notu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+        <tr>
+            <td>@order.OrderID</td>
+            <td>@order.TableId</td>
+            <td>@order.OrderDate.ToShortDateString()</td>
+            <td>@order.TotalPrice.ToString("C2")</td>
+            <td>@order.EmployeeId</td>
+            <td>@order.Notes</td>
+            <td colspan="2"><a asp-action="OrderDetail" asp-controller="Order" asp-route-productId="@order.OrderID" asp-route-orderId="@order.OrderID" class="btn btn-primary">Sipariş Detay</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+

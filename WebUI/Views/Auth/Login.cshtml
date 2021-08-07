@@ -14,20 +14,18 @@
         <div class="form col-md">
             <form asp-action="Login" asp-controller="Auth" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group col-md">
-                    <label asp-for="EmployeeID" class="control-label">Sicil</label>
-                    <input asp-for="EmployeeID" class="form-control" />
-                    <span asp-validation-for="EmployeeID" class="text-danger"></span>
+                <div class="form-group form-floating col-md">
+                    <input asp-for="EmployeeID" id="floatingId" class="form-control" />
+                    <label for="floatingId" class="control-label">Sicil</label>
                 </div>
                 <br />
-                <div class="form-group col-md">
-                    <label asp-for="Password" class="control-label">Şifre</label>
-                    <input type="password" asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="form-group form-floating col-md">
+                    <input type="password" asp-for="Password" id="floatingPassword" class="form-control" />
+                    <label for="floatingPassword" class="control-label">Şifre</label>
                 </div>
                 <br />
                 <div class="form-group">
-                    <input type="submit" value="Login" class="btn btn-primary" />
+                    <input type="submit" value="Login" id="btnLogin" class="btn btn-primary" />
                 </div>
             </form>
         </div>
