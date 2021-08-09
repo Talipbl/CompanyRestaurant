@@ -19,7 +19,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public TableProcessor(string url, string accessToken)
         {
-            _url = url + "api/tables/";
+            _url = url + "tables/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 

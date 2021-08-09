@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public OrderProcessor(string url, string accessToken)
         {
-            _url = url + "api/orders/";
+            _url = url + "orders/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 
@@ -55,9 +56,15 @@ namespace WebUI.ApiControllers.ApiProcessors
             return await ApiHelper.GetApiResponse<decimal>(ApiClient, currentUrl);
         }
 
-        public async Task<ResponseDTO<List<Order>>> GetLastOrdersAsync(int takeValue = 10)
+        public async Task<ResponseDTO<List<Order>>> GetLastOrdersAsync(int takeValue = 100)
         {
             string currentUrl = _url + "getlastorders?takeValue=" + takeValue;
+            return await ApiHelper.GetApiResponse<List<Order>>(ApiClient, currentUrl);
+        }
+
+        public async Task<ResponseDTO<List<Order>>> GetLastOrdersWithOrderBy()
+        {
+            string currentUrl = _url + "getlastorderswithorderby";
             return await ApiHelper.GetApiResponse<List<Order>>(ApiClient, currentUrl);
         }
 

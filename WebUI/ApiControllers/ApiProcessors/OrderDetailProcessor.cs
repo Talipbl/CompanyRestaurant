@@ -18,7 +18,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public OrderDetailProcessor(string url, string accessToken)
         {
-            _url = url + "api/orderdetails/";
+            _url = url + "orderdetails/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 

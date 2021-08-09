@@ -17,7 +17,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public PersonProcessor(string url, string accessToken)
         {
-            _url = url + "api/persons/";
+            _url = url + "persons/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 

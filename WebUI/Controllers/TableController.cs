@@ -9,13 +9,14 @@ using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
    [Authorize]
     public class TableController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         TableProcessor _tableProcessor;
 
         public TableController(IHttpContextAccessor contextAccessor)

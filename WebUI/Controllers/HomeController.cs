@@ -15,13 +15,14 @@ using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.DataTransferObjects;
 using WebUI.Models.ViewModels;
+using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         ProductProcessor _productProcessor;
         OrderProcessor _orderProcessor;
         TableProcessor _tableProcessor;

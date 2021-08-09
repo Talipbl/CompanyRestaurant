@@ -6,6 +6,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Business.Concrete.Managers
 {
@@ -48,10 +49,15 @@ namespace Business.Concrete.Managers
         {
             return BaseProcess(_orderDal.Update(order), Messages.Updated);
         }
-
-        public IDataResult<List<Order>> GetLastOrders(int takeValue = 10)
+        
+        public IDataResult<List<Order>> GetLastOrders(int takeValue = 100)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetLastOrders((x => x.OrderDate.Day == DateTime.Now.Day), takeValue), Messages.AllListed);
+            return new SuccessDataResult<List<Order>>(_orderDal.GetLastOrders((x => x.OrderDate.Day == DateTime.Now.Day),takeValue), Messages.AllListed);
+        }
+
+        public IDataResult<List<Order>> GetLastOrdersWithOrderBy()
+        {
+            return new SuccessDataResult<List<Order>>(_orderDal.GetLastOrders(), Messages.AllListed);
         }
 
         public IDataResult<decimal> GetTotalOrderAmountByDateTime(int day)

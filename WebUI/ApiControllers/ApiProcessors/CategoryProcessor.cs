@@ -17,7 +17,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public CategoryProcessor(string url, string accessToken)
         {
-            _url = url + "api/categories/";
+            _url = url + "categories/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 

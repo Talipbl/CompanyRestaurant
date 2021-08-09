@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrderDetailsController : Controller
     {

@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
         }
 
         //
-        public List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 10)
+        public List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 100)
         {
             using (CompanyContext db = new CompanyContext())
             {

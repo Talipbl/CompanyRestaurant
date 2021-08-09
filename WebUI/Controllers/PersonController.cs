@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using Microsoft.AspNetCore.Authorization;
+using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
     [Authorize]
     public class PersonController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         PersonProcessor _personProcessor;
 
         public PersonController(IHttpContextAccessor contextAccessor)

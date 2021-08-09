@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class OrdersController : ControllerBase
@@ -51,9 +52,19 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("getlastorderswithorderby")]
+        public IActionResult GetLastOrderWithOrderBy()
+        {
+            var result = _orderService.GetLastOrdersWithOrderBy();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
 
         [HttpGet("getlastorders")]
-        public IActionResult GetLastOrders(int takeValue = 10)
+        public IActionResult GetLastOrders(int takeValue = 100)
         {
             var result = _orderService.GetLastOrders(takeValue);
             if (result.Success)

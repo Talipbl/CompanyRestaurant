@@ -9,6 +9,14 @@ namespace WebUI.ApiControllers
 {
     public class ApiClientHelper
     {
+        public static string ApiConnectUrl
+        {
+            get
+            {
+                return "https://crestaurantapi.azurewebsites.net/";
+            }
+            private set { }
+        }
         public static HttpClient CreateApiClient(HttpClient ApiClient)
         {
             ApiClient = new HttpClient();

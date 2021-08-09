@@ -12,12 +12,13 @@ using System.Threading.Tasks;
 using WebUI.Methods;
 using WebUI.ApiControllers.ApiProcessors;
 using Core.Utilities.Extensions;
+using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
     public class AuthController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         AuthProcessor _authProcessor;
         IHttpContextAccessor _contextAccessor;
         public AuthController(IHttpContextAccessor contextAccessor)

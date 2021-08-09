@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WebUI.ApiControllers;
 using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Methods;
 using WebUI.Models.ViewModels;
@@ -16,7 +17,7 @@ namespace WebUI.Controllers
     [Authorize]
     public class ProductController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         ProductProcessor _productProcessor;
         CategoryProcessor _categoryProcessor;
         public ProductController(IHttpContextAccessor contextAccessor)

@@ -23,7 +23,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public ProductProcessor(string url, string accessToken)
         {
-            _url = url + "api/products/";
+            _url = url + "products/";
             ApiClient = ApiClientHelper.CreateApiClientWithBearerHeader(ApiClient, accessToken);
         }
 

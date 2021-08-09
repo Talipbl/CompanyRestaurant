@@ -13,13 +13,14 @@ using WebUI.Models;
 using WebUI.Models.DataTransferObjects;
 using WebUI.Models.Managers;
 using WebUI.Models.ViewModels;
+using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
     [Authorize]
     public class OrderController : Controller
     {
-        string _url = "https://localhost:44396/";
+        string _url = ApiClientHelper.ApiConnectUrl;
         OrderDetailController _orderDetailController;
         ProductProcessor _productProcessor;
         OrderProcessor _orderProcessor;
@@ -164,7 +165,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public async Task<ActionResult> ListOrders()
         {
-            ResponseDTO<List<Order>> orders = await _orderProcessor.GetOrdersAsync();
+            ResponseDTO<List<Order>> orders = await _orderProcessor.GetLastOrdersWithOrderBy();
             ListOrdersViewModel model = new ListOrdersViewModel
             {
                 Orders = orders.Entity

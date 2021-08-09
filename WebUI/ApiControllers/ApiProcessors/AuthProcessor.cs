@@ -18,7 +18,7 @@ namespace WebUI.ApiControllers.ApiProcessors
 
         public AuthProcessor(string url)
         {
-            _url = url + "api/auth/";
+            _url = url + "auth/";
             ApiClient = ApiClientHelper.CreateApiClient(ApiClient);
         }
 

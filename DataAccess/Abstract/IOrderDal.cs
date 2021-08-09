@@ -10,7 +10,7 @@ namespace DataAccess.Abstract
     public interface IOrderDal : IEntityRepository<Order>
     {
         //
-        List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 10);
+        List<Order> GetLastOrders(Expression<Func<Order, bool>> filter = null, int takeValue = 100);
         Order GetLastOrder();
     }
 }
