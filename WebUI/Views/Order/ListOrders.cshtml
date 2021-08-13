@@ -26,7 +26,7 @@
             <td>@order.TotalPrice.ToString("C2")</td>
             <td>@order.EmployeeId</td>
             <td>@order.Notes</td>
-            <td colspan="2"><a asp-action="OrderDetail" asp-controller="Order" asp-route-productId="@order.OrderID" asp-route-orderId="@order.OrderID" class="btn btn-primary">Sipariş Detay</a></td>
+            <td colspan="2"><a asp-action="ListOrderDetails" asp-controller="OrderDetail" asp-route-orderId="@order.OrderID" class="btn btn-primary">Sipariş Detay</a></td>
         </tr>
         }
     </tbody>

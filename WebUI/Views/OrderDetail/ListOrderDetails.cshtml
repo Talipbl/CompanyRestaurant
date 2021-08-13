@@ -1,0 +1,49 @@
+﻿@model OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "ListOrderDetails";
+}
+
+<h1>ListOrderDetails</h1>
+
+<h4>OrderDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <label class="form-control" >Sipariş Numarası</label>
+        <input asp-for="OrderDetails[0].OrderID" class=" form-control" disabled />
+        <label class="form-control">Masa Numarası</label>
+        <input asp-for="OrderDetails[0].TableId" class="form-control" disabled />
+
+        <label class="form-control">Siparişteki Ürünler</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ürün Adı</th>
+                    <th>Birim Fiyatı</th>
+                    <th>Adedi</th>
+                    <th>Tutar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var products in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>@products.ProductName</td>
+                        <td>@products.UnitPrice.ToString("C2")</td>
+                        <td>@products.Quantity</td>
+                        <td>@products.Amount.ToString("C2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

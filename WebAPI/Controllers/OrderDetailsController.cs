@@ -34,5 +34,16 @@ namespace WebAPI.Controllers
         {
             return BaseProcess(_orderDetailService.Add(orderDetail));
         }
+
+        [HttpGet("getdetails")]
+        public IActionResult GetOrderDetails(int orderId)
+        {
+            var result = _orderDetailService.GetOrderDetail(orderId);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }
