@@ -9,13 +9,12 @@ namespace WebUI.Models
     {
         public Tab()
         {
-            Amount = 1;
+            Quantity = 1;
         }
-
         public int ID { get; set; }
         public string Name { get; set; }
-        public short Amount { get; set; } 
-        public decimal SubPrice { get; set; }
-        public decimal TotalPrice => Amount * SubPrice;
+        public short Quantity { get; set; } 
+        public decimal UnitPrice { get; set; }
+        public decimal SubPrice => Quantity * UnitPrice;
     }
 }

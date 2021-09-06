@@ -24,7 +24,7 @@
                         <td>@product.ProductID</td>
                         <td>@product.ProductName</td>
                         <td>@product.UnitPrice.ToString("C2")</td>
-                        <td colspan="2"><a asp-action="AddTab" asp-controller="Order" asp-route-productId="@product.ProductID" asp-route-tableId="@Model.Order.TableId" asp-route-orderDate="@Model.Order.OrderDate" class="btn btn-primary">Adisyona Ekle</a></td>
+                        <td colspan="2"><a asp-action="AddTab" asp-controller="Order" asp-route-productId="@product.ProductID" asp-route-tableId="@Model.Order.TableId" class="btn btn-primary">Adisyona Ekle</a></td>
                     </tr>
                 }
             </tbody>
@@ -59,15 +59,17 @@
                             <tr>
                                 <td>@tab.ID</td>
                                 <td>@tab.Name</td>
-                                <td>@tab.Amount</td>
-                                <td>@tab.TotalPrice.ToString("C2")</td>
+                                <td>@tab.Quantity</td>
+                                <td>@tab.SubPrice.ToString("C2")</td>
+                                <td><a asp-action="AddTab" asp-controller="Order" asp-route-productId="@tab.ID" asp-route-tableId="@(Model.Order.TableId)" class="btn btn-primary">+</a></td>
+                                <td><a asp-action="DeleteTab" asp-controller="Order" asp-route-id="@tab.ID" asp-route-tableId="@(Model.Order.TableId)" class="btn btn-danger">-</a></td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                @if (Model.TabManager.TabsDictionary.Count>0)
+                @if (Model.TabManager.TabsDictionary.Count > 0)
                 {
-                    <a asp-action="OrderCheckout" asp-controller="Order" asp-route-tableId="@Model.Order.TableId" class="btn btn-success">Siparişi Tamamla</a>
+                    <a asp-action="OrderCheckout" asp-controller="Order" asp-route-tableId="@Model.Order.TableId" asp-route-orderDate="@Model.Order.OrderDate" class="btn btn-success">Siparişi Tamamla</a>
                 }
 
             </div>

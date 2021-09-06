@@ -7,13 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebUI.Methods;
+using WebUI.ApiControllers;
 using WebUI.ApiControllers.ApiProcessors;
+using WebUI.Methods;
 using WebUI.Models;
 using WebUI.Models.DataTransferObjects;
 using WebUI.Models.Managers;
 using WebUI.Models.ViewModels;
-using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
@@ -44,7 +44,7 @@ namespace WebUI.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<ActionResult> List(int tableId, DateTime orderDate)
+        public async Task<ActionResult> List(int tableId)
         {
             TabManager tabManager;
             if (HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity==null)
@@ -59,9 +59,7 @@ namespace WebUI.Controllers
             Order order = new Order();
             order.EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID;
             order.TableId = tableId;
-            if (orderDate.Year == 0001) 
-                    orderDate = DateTime.Now;
-            order.OrderDate = orderDate;
+            order.OrderDate = DateTime.UtcNow.AddHours(3);
             OrderViewModel model = new OrderViewModel()
             {
                 Order = order,
@@ -88,44 +86,38 @@ namespace WebUI.Controllers
 
             tab.ID = product.Entity.ProductID;
             tab.Name = product.Entity.ProductName;
-            tab.SubPrice = (decimal)product.Entity.UnitPrice;
+            tab.UnitPrice = (decimal)product.Entity.UnitPrice;
 
             tabManager.Add(tab);
             HttpContext.Session.SetObject("tab" + tableId, tabManager);
-            return RedirectToAction("List", "Order", new { tableId = tableId, orderDate = orderDate });
+            return RedirectToAction("List", "Order", new { tableId = tableId });
         }
         [HttpGet]
-        public ActionResult DeleteTab(int id, int tableId)
+        public ActionResult DeleteTab(int id, int tableId, DateTime orderDate)
         {
             TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
-
             tabManager.Delete(id);
-
-            return RedirectToAction("List", "Order", tableId);
+            HttpContext.Session.SetObject("tab" + tableId, tabManager);
+            return RedirectToAction("List", "Order", new { tableId = tableId});
         }
 
         [HttpPost]
         public ActionResult UpdateTab(int tableId, params short[] amounts)
         {
             TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
-
             tabManager.Update(amounts);
-
+            HttpContext.Session.SetObject("tab" + tableId, tabManager);
             return RedirectToAction("Order", "Add");
         }
         [HttpGet]
-        public async Task<ActionResult> OrderCheckout(int tableId)
+        public async Task<ActionResult> OrderCheckout(int tableId, DateTime dateTime)
         {
             TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
-            DateTimeDTO dateTime = new DateTimeDTO()
-            {
-                DateTime = DateTime.Now
-            };
             Order order = new Order()
             {
                 EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID,
                 TableId = tableId,
-                OrderDate = dateTime.DateTime,
+                OrderDate = dateTime,
                 TotalPrice = tabManager.TotalPrice
             };
             if((await _orderProcessor.AddOrderAsync(order)).ResponseMessage.IsSuccessStatusCode)
@@ -139,7 +131,7 @@ namespace WebUI.Controllers
                         OrderID = orderId,
                         ProductID = tabManager.Tabs[i].ID,
                         Amount = tabManager.Tabs[i].SubPrice,
-                        Quantity = tabManager.Tabs[i].Amount
+                        Quantity = tabManager.Tabs[i].Quantity
                     };
                     _orderDetailController.AddOrderDetail(orderDetail);
                 }

@@ -10,13 +10,13 @@ namespace WebUI.Models.Managers
         public Dictionary<int, Tab> TabsDictionary = new Dictionary<int, Tab>();
 
         public List<Tab> Tabs => TabsDictionary.Values.ToList();
-        public decimal TotalPrice => TabsDictionary.Sum(x => x.Value.TotalPrice);
+        public decimal TotalPrice => TabsDictionary.Sum(x => x.Value.SubPrice);
 
         public void Add(Tab cart)
         {
             if (TabsDictionary.ContainsKey(cart.ID))
             {
-                TabsDictionary[cart.ID].Amount++;
+                TabsDictionary[cart.ID].Quantity++;
             }
             else
             {
@@ -26,9 +26,9 @@ namespace WebUI.Models.Managers
 
         public void Delete(int id)
         {
-            if (TabsDictionary[id].Amount > 1)
+            if (TabsDictionary[id].Quantity > 1)
             {
-                TabsDictionary[id].Amount--;
+                TabsDictionary[id].Quantity--;
             }
             else
             {
@@ -40,7 +40,7 @@ namespace WebUI.Models.Managers
         {
             for (int i = 0; i < amounts.Length; i++)
             {
-                TabsDictionary.ElementAt(i).Value.Amount = amounts[i];
+                TabsDictionary.ElementAt(i).Value.Quantity = amounts[i];
             }
         }
     }

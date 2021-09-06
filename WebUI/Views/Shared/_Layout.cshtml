@@ -150,8 +150,8 @@
                     </button>
                     <div class="collapse ps-4" id="table-collapse" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="nav-link  rounded">Yeni Masa Aç</a></li>
-                            <li><a href="#" class="nav-link  rounded">Masaları Düzenle</a></li>
+                            <li><a href="@Url.ActionLink("AddTable","Table")" class="nav-link  rounded">Yeni Masa Aç</a></li>
+                            <li><a href="@Url.ActionLink("TableManager","Table")" class="nav-link  rounded">Masaları Düzenle</a></li>
                             <li><a href="#" class="nav-link  rounded">Masa Yerleşim Planı</a></li>
                         </ul>
                     </div>
@@ -163,33 +163,53 @@
             <hr>
         </div>
 
-        <div class="row col-md-9">
-            <div class="col-md-9">
-                @RenderBody()
-            </div>
-            <div class="col-md-3" style="height:100%;">
-                <div class="card d-flex flex-column flex-shrink-0 p-3 m-3 bg-white col-md-2 rounded-2 shadow" style="width: 300px; display:inline-block; vertical-align:top; overflow:auto;">
-                    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                        <svg class="bi me-2" width="30" height="24"><use xlink:href="#toggles2"></use></svg>
-                        <span class="fs-5 fw-semibold">Bildirimler</span>
-                    </a>
-                    <div class="list-group list-group-flush border-bottom scrollarea">
-                        <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
-                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                <strong class="mb-1">List group item heading</strong>
-                                <small>Wed</small>
-                            </div>
-                            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                <strong class="mb-1">List group item heading</strong>
-                                <small class="text-muted">Tues</small>
-                            </div>
-                            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-                        </a>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div class="toast text-white bg-success shadow" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Sistem Mesajı</strong>
+                        <small>@DateTime.Now.ToString("dddd, MM/dd/yyyy H:mm")</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        @TempData["SuccessMessage"].ToString()
                     </div>
                 </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('.toast').toast('show');
+                });
+            </script>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div class="toast text-white bg-danger shadow" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Sistem Mesajı</strong>
+                        <small>@DateTime.Now.ToString("dddd, MM/dd/yyyy H:mm")</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        @TempData["ErrorMessage"].ToString()
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('.toast').toast('show');
+                });
+            </script>
+        }
+
+        <div class="row col-md-9">
+            <div>
+                @RenderBody()
             </div>
         </div>
     </div>

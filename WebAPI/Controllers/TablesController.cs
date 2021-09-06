@@ -81,6 +81,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("deletetable")]
+        public IActionResult DeleteTable(int id)
+        {
+            var result = _tableService.Delete(id);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
         
     }
 }

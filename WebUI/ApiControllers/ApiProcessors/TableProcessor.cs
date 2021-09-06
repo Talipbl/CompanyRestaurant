@@ -59,5 +59,11 @@ namespace WebUI.ApiControllers.ApiProcessors
             return await ApiHelper.PostApiResponse<string, Table>(ApiClient, currentUrl, table);
         }
 
+        public async Task<ResponseDTO<string>> DeleteTableAsync(int id)
+        {
+            string currentUrl = _url + "deletetable?id="+id;
+            return await ApiHelper.GetApiResponse<string>(ApiClient, currentUrl);
+        }
+
     }
 }

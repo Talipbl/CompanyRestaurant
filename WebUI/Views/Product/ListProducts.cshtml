@@ -2,49 +2,7 @@
 @{
     ViewData["Title"] = "ListProducts";
 }
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div class="toast text-white bg-success shadow" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Sistem Mesajı</strong>
-                <small>@DateTime.Now.ToString("dddd, MM/dd/yyyy H:mm")</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                @TempData["SuccessMessage"].ToString()
-            </div>
-        </div>
-    </div>
 
-    <script>
-        $(document).ready(function () {
-            $('.toast').toast('show');
-        });
-    </script>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div class="toast text-white bg-danger shadow" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Sistem Mesajı</strong>
-                <small>@DateTime.Now.ToString("dddd, MM/dd/yyyy H:mm")</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                @TempData["ErrorMessage"].ToString()
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $(document).ready(function () {
-            $('.toast').toast('show');
-        });
-    </script>
-}
 <br />
 <h1>Ürünler</h1>
 

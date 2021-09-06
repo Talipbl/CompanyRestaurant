@@ -13,7 +13,6 @@ namespace WebUI.ApiControllers
         {
             get
             {
-                //return "https://corerestaurant.azurewebsites.net/";
                 return "https://localhost:44396/";
             }
             private set { }

@@ -4,6 +4,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Results.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.DataTransferObject;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,12 +38,27 @@ namespace Business.Concrete.Managers
 
         public IDataResult<List<OrderDetail>> GetOrderDetail(int orderId)
         {
-            return new SuccessDataResult<List<OrderDetail>>(_orderDetailDal.GetAll(x => x.OrderID == orderId),Messages.Listed);
+            var result = _orderDetailDal.GetAll(x => x.OrderID == orderId);
+            if (result != null)
+            {
+                return new SuccessDataResult<List<OrderDetail>>(result, Messages.AllListed);
+            }
+            return new ErrorDataResult<List<OrderDetail>>(default, Messages.Error);
         }
 
         public IResult Update(OrderDetail orderDetail)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<List<OrderDetailsDTO>> GetOrderDetailWithJoins(int orderId)
+        {
+            var result = _orderDetailDal.GetOrderDetailWithJoins(orderId);
+            if (result.Count > 0)
+            {
+                return new SuccessDataResult<List<OrderDetailsDTO>>(result, Messages.AllListed);
+            }
+            return new ErrorDataResult<List<OrderDetailsDTO>>(default, Messages.Error);
         }
     }
 }

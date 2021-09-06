@@ -7,9 +7,6 @@
     <div class="col-md-10">
         <h1>Masa Yönetimi</h1>
     </div>
-    <div class="col-md-2 p-2">
-        <th><a asp-action="AddTable" class="btn btn-primary">Masa Ekle</a></th>
-    </div>
 </div>
 <hr />
 <table class="table table-bordered shadow-sm rounded-3">
@@ -60,8 +57,10 @@
                                 Dolu
                             </label>
                         </div>
-
                     }
+                </td>
+                <td>
+                    <a asp-action="DeleteTable" asp-controller="Table" asp-route-id="@table.TableID" class="btn btn-danger">Sil</a>
                 </td>
             </tr>
         }

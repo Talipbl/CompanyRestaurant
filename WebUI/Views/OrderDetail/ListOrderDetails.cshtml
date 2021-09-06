@@ -9,41 +9,66 @@
 <h4>OrderDetail</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <label class="form-control" >Sipariş Numarası</label>
-        <input asp-for="OrderDetails[0].OrderID" class=" form-control" disabled />
-        <label class="form-control">Masa Numarası</label>
-        <input asp-for="OrderDetails[0].TableId" class="form-control" disabled />
 
-        <label class="form-control">Siparişteki Ürünler</label>
-        <table>
-            <thead>
-                <tr>
-                    <th>Ürün Adı</th>
-                    <th>Birim Fiyatı</th>
-                    <th>Adedi</th>
-                    <th>Tutar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var products in Model.OrderDetails)
-                {
-                    <tr>
-                        <td>@products.ProductName</td>
-                        <td>@products.UnitPrice.ToString("C2")</td>
-                        <td>@products.Quantity</td>
-                        <td>@products.Amount.ToString("C2")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="card col-md-5 m-2 rounded-3 shadow">
+        <div class="card-body">
+            <div class="card-title">Sipariş Numarası</div>
+            <div class="card-text"><input asp-for="OrderDetails[0].OrderID" class="form-control" disabled /></div>
+        </div>
+    </div>
 
+    <div class="card col-md-5 m-2 rounded-3 shadow">
+        <div class="card-body">
+            <div class="card-title">Masa Numarası</div>
+            <div class="card-text"><input asp-for="OrderDetails[0].TableId" class="form-control" disabled /></div>
+        </div>
+    </div>
 
+    <div class="card col-md-5 m-2 rounded-3 shadow">
+        <div class="card-body">
+            <div class="card-title">Sipariş Tarihi</div>
+            <div class="card-text"><input asp-for="OrderDetails[0].OrderDate" class="form-control" disabled /></div>
+        </div>
+    </div>
 
+    <div class="card col-md-5 m-2 rounded-3 shadow">
+        <div class="card-body">
+            <div class="card-title">Siparişi Alan Personel</div>
+            <div class="card-text"><input asp-for="OrderDetails[0].EmployeeId" class="form-control" disabled /></div>
+        </div>
+    </div>
+
+    <div class="card col-md-10 p-2 m-2 rounded-3 shadow">
+        <div class="card-header">Siparişteki Ürünler</div>
+        <div class="card-body">
+            <div class="card-text">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            <th>Birim Fiyatı</th>
+                            <th>Adedi</th>
+                            <th>Tutar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var products in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>@products.ProductName</td>
+                                <td>@products.UnitPrice.ToString("C2")</td>
+                                <td>@products.Quantity</td>
+                                <td>@products.Amount.ToString("C2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ListOrders" asp-controller="Order">Back to List</a>
 </div>
 

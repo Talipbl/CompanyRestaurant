@@ -38,12 +38,12 @@ namespace WebAPI.Controllers
         [HttpGet("getdetails")]
         public IActionResult GetOrderDetails(int orderId)
         {
-            var result = _orderDetailService.GetOrderDetail(orderId);
+            var result = _orderDetailService.GetOrderDetailWithJoins(orderId);
             if (result.Success)
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

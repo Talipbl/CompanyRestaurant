@@ -13,7 +13,7 @@ using WebUI.ApiControllers;
 
 namespace WebUI.Controllers
 {
-   [Authorize]
+    [Authorize]
     public class TableController : Controller
     {
         string _url = ApiClientHelper.ApiConnectUrl;
@@ -44,7 +44,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTables()
         {
             var result = await _tableProcessor.GetTables();
-            if (result!=null)
+            if (result != null)
             {
                 return Ok(result);
             }
@@ -61,6 +61,20 @@ namespace WebUI.Controllers
         {
             table.Status = true;
             await _tableProcessor.AddTableAsync(table);
+            return RedirectToAction(nameof(TableManager));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DeleteTable(int id)
+        {
+            var result = await _tableProcessor.DeleteTableAsync(id);
+            if (!result.ResponseMessage.IsSuccessStatusCode)
+            {
+                TempData["ErrorMessage"] = result.ResponseMessage.ReasonPhrase;
+            }
+            else 
+                TempData["SuccessMessage"] = result.Entity;
+            ModelState.AddModelError("", "");
             return RedirectToAction(nameof(TableManager));
         }
     }
