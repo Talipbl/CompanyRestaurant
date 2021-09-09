@@ -18,11 +18,13 @@ namespace WebUI.Controllers
     {
         string _url = ApiClientHelper.ApiConnectUrl;
         TableProcessor _tableProcessor;
+        TableLayoutProcessor _layoutProcessor;
 
         public TableController(IHttpContextAccessor contextAccessor)
         {
             string accessToken = TokenHelper.GetToken(contextAccessor);
             _tableProcessor = new TableProcessor(_url, accessToken);
+            _layoutProcessor = new TableLayoutProcessor(_url, accessToken);
         }
 
         [HttpGet]
@@ -76,6 +78,16 @@ namespace WebUI.Controllers
                 TempData["SuccessMessage"] = result.Entity;
             ModelState.AddModelError("", "");
             return RedirectToAction(nameof(TableManager));
+        }
+        [HttpGet]
+        public async Task<ActionResult> TableLayout()
+        {
+            var result = await _layoutProcessor.GetLayoutsAsync();
+            TableLayoutsViewModel model = new TableLayoutsViewModel
+            {
+                TableLayouts = result.Entity
+            };
+            return View(model);
         }
     }
 }

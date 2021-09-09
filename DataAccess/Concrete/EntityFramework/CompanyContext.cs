@@ -26,6 +26,8 @@ namespace DataAccess.Concrete.EntityFramework
 
             modelBuilder.ApplyConfiguration<OperationClaim>(new OperationClaimMapping());
             modelBuilder.ApplyConfiguration<PersonClaim>(new PersonClaimMapping());
+
+            modelBuilder.ApplyConfiguration<TableLayout>(new TableLayoutMapping());
         }
 
         public virtual DbSet<Product> Products { get; set; }
@@ -39,6 +41,7 @@ namespace DataAccess.Concrete.EntityFramework
         //public virtual DbSet<StockUnit> StockUnits { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<TableLayout> TableLayouts { get; set; }
 
 
         public virtual DbSet<OperationClaim> Claims { get; set; }

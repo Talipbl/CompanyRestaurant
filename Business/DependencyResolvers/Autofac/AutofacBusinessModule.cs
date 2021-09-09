@@ -3,6 +3,7 @@ using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete.Managers;
 using Castle.DynamicProxy;
+using Core.Utilities.Helpers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -45,7 +46,12 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<TableManager>().As<ITableService>().SingleInstance();
             builder.RegisterType<EfTableDal>().As<ITableDal>().SingleInstance();
 
+            builder.RegisterType<TableLayoutManager>().As<ITableLayoutService>().SingleInstance();
+            builder.RegisterType<EfTableLayoutDal>().As<ITableLayoutDal>().SingleInstance();
+
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
+
+            builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

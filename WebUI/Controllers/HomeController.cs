@@ -16,6 +16,7 @@ using WebUI.ApiControllers.ApiProcessors;
 using WebUI.Models.DataTransferObjects;
 using WebUI.Models.ViewModels;
 using WebUI.ApiControllers;
+using System.IO;
 
 namespace WebUI.Controllers
 {
@@ -49,5 +50,19 @@ namespace WebUI.Controllers
             return View(homePage);
 
         }
+
+        //[HttpPost]
+        //public async Task<ActionResult> UploadImage(IFormFile file)
+        //{
+        //    if (file != null)
+        //    {
+        //        string imageExtension = Path.GetExtension(file.FileName);
+        //        string imageName = Guid.NewGuid() + imageExtension;
+        //        string path = Path.Combine(Directory.GetCurrentDirectory(),$"wwwroot/images/{imageName}");
+        //        using var stream = new FileStream(path, FileMode.Create);
+        //        await file.CopyToAsync(stream);
+        //    }
+        //    return RedirectToAction("TableLayout","Table");
+        //}
     }
 }
