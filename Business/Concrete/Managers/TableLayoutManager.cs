@@ -6,8 +6,10 @@ using Core.Utilities.Results.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Business.Concrete.Managers
@@ -30,9 +32,9 @@ namespace Business.Concrete.Managers
             return new ErrorResult();
         }
 
-        public IResult Add(IFormFile file)
+        public IResult Add(IFormFile file, string directory = null)
         {
-            var result = _fileHelper.Upload(file);
+            var result = _fileHelper.Upload(file, directory);
             if (result.Success)
             {
                 TableLayout tableLayout = new TableLayout()
@@ -46,7 +48,21 @@ namespace Business.Concrete.Managers
 
         public IDataResult<List<TableLayout>> GetLayouts()
         {
-            return new SuccessDataResult<List<TableLayout>>(_tableLayoutDal.GetAll());
+            List<TableLayout> pathLayouts = new List<TableLayout>();
+            TableLayout tableLayout;
+            var result = _tableLayoutDal.GetAll();
+            if (result != null)
+            {
+                foreach (var path in result)
+                {
+                    tableLayout = new TableLayout();
+                    tableLayout.LayoutID = path.LayoutID;
+                    tableLayout.LayoutPath = FileHelper.GetCurrentDirectory.Replace("\\", "/") + path.LayoutPath;
+                    pathLayouts.Add(tableLayout);
+                }
+            }
+
+            return new SuccessDataResult<List<TableLayout>>(pathLayouts);
         }
     }
 }

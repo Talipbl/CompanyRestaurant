@@ -25,17 +25,17 @@ namespace WebUI.ApiControllers.ApiProcessors
             string currentUrl = _url + "getlayouts";
             return await ApiHelper.GetApiResponse<List<TableLayout>>(ApiClient, currentUrl);
         }
-        public async Task<ResponseDTO<string>> AddLayoutAsync(IFormFile file)
+        public async Task<ResponseDTO<string>> AddLayoutAsync(IFormFile file, string directory = null)
         {
-            string currentUrl = _url + "add";
-            string serializeFormat;
+            string currentUrl = _url + "add?directory=" + directory;
+            byte[] fileByte;
             using (var ms = new MemoryStream())
             {
                 file.CopyTo(ms);
-                var fileByte = ms.ToArray();
-                serializeFormat = Convert.ToBase64String(fileByte);
+                fileByte = ms.ToArray();
             }
-            return await ApiHelper.PostApiResponse<string,string>(ApiClient, currentUrl, serializeFormat);
+
+            return await ApiHelper.PostMultipartFormApiResponse<string>(ApiClient, currentUrl, fileByte, file.FileName);
         }
     }
 }

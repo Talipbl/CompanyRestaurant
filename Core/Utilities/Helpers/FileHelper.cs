@@ -11,7 +11,16 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper : IFileHelper
     {
-        private static string _currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
+        private static string CurrentDirectory = Environment.CurrentDirectory + "\\wwwroot";
+        public static string GetCurrentDirectory 
+        { 
+            get
+            {
+                return CurrentDirectory;
+            }
+            private set { }
+        }
+        
         private static string _folderName = "\\images\\";
 
         public void CheckDirectoryExists(string directory)
@@ -40,12 +49,16 @@ namespace Core.Utilities.Helpers
             }
         }
 
-        public IResult Upload(IFormFile file)
+        public IResult Upload(IFormFile file, string directory = null)
         {
             if (file != null)
             {
+                if (directory == null)
+                {
+                    directory = CurrentDirectory;
+                }
                 string imageExtension = Path.GetExtension(file.FileName);
-                string imageName = Guid.NewGuid() + imageExtension;
+                string imageName = Guid.NewGuid().ToString();
 
                 var typeResult = CheckFileTypeValid(imageExtension);
                 if (!typeResult.Success)
@@ -53,8 +66,8 @@ namespace Core.Utilities.Helpers
                     return new ErrorResult(typeResult.Message);
                 }
 
-                CheckDirectoryExists(_currentDirectory + _folderName);
-                CreateFile(_currentDirectory + _folderName + imageName + imageExtension, file);
+                CheckDirectoryExists(directory + _folderName);
+                CreateFile(directory + _folderName + imageName + imageExtension, file);
                 return new SuccessResult((_folderName + imageName + imageExtension).Replace("\\", "/"));
             }
             return new ErrorResult(HelperMessage.EmptyFile);

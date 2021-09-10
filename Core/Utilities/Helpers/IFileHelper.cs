@@ -10,6 +10,6 @@ namespace Core.Utilities.Helpers
     {
         IResult CheckFileTypeValid(string type);
         void CreateFile(string directory, IFormFile file);
-        IResult Upload(IFormFile file);
+        IResult Upload(IFormFile file, string directory = null);
     }
 }

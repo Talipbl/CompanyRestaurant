@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Helpers;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,9 +33,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddLayouts(IFormFile file)
+        public IActionResult AddLayouts(IFormFile file, string directory = null)
         {
-            var result = _tableLayoutService.Add(file);
+            var result = _tableLayoutService.Add(file, directory);
             if (result.Success)
             {
                 return Ok(result.Message);

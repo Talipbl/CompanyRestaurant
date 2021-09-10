@@ -25,12 +25,14 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddLayout(IFormFile file)
         {
-            var result = await _tableLayoutProcessor.AddLayoutAsync(file);
+            string directory = Environment.CurrentDirectory + "\\wwwroot";
+            var result = await _tableLayoutProcessor.AddLayoutAsync(file,directory);
             if (result.ResponseMessage.IsSuccessStatusCode)
             {
                 TempData["SuccessMessage"] = result.Entity;
             }
-            TempData["ErrorMessage"] = result.Entity;
+            else
+                TempData["ErrorMessage"] = result.Entity;
             ModelState.AddModelError("", "");
             return RedirectToAction("TableLayout", "Table");
         }
