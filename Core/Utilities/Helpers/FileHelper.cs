@@ -12,16 +12,11 @@ namespace Core.Utilities.Helpers
     public class FileHelper : IFileHelper
     {
         private static string CurrentDirectory = Environment.CurrentDirectory + "\\wwwroot";
-        public static string GetCurrentDirectory 
-        { 
-            get
-            {
-                return CurrentDirectory;
-            }
-            private set { }
-        }
-        
-        private static string _folderName = "\\images\\";
+        private static string CustomDirectory = "http://sixxen.xyz/upload_image/";
+        public static string GetCustomDirectory { get { return CustomDirectory; } private set { } }
+        public static string GetCurrentDirectory { get { return CurrentDirectory; } private set { } }
+
+        private static string _folderName = "\\img\\";
 
         public void CheckDirectoryExists(string directory)
         {

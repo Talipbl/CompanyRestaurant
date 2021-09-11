@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getlastorders")]
-        public IActionResult GetLastOrders(int takeValue = 100)
+        public IActionResult GetLastOrders(int takeValue = 10)
         {
             var result = _orderService.GetLastOrders(takeValue);
             if (result.Success)

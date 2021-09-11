@@ -52,6 +52,7 @@ namespace WebUI.Controllers
                 tabManager = new TabManager();
                 ResponseDTO<Table> table = await _tableProcessor.GetTableAsync(tableId);
                 table.Entity.Status = false;
+                tabManager.OrderDate = DateTime.UtcNow.AddHours(3);
                 await _tableProcessor.SetStatusAsync(table.Entity);
             }
             else
@@ -59,17 +60,18 @@ namespace WebUI.Controllers
             Order order = new Order();
             order.EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID;
             order.TableId = tableId;
-            order.OrderDate = DateTime.UtcNow.AddHours(3);
+            order.OrderDate = tabManager.OrderDate;
             OrderViewModel model = new OrderViewModel()
             {
                 Order = order,
                 Products = (await _productProcessor.GetProductsAsync()).Entity.ToList(),
                 TabManager = tabManager
             };
+            HttpContext.Session.SetObject("tab" + tableId, tabManager);
             return View(model);
         }
         [HttpGet]
-        public async Task<ActionResult> AddTab(int productId, int tableId, DateTime orderDate)
+        public async Task<ActionResult> AddTab(int productId, int tableId)
         {
             TabManager tabManager;
             if (HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity==null)
@@ -110,14 +112,14 @@ namespace WebUI.Controllers
             return RedirectToAction("Order", "Add");
         }
         [HttpGet]
-        public async Task<ActionResult> OrderCheckout(int tableId, DateTime dateTime)
+        public async Task<ActionResult> OrderCheckout(int tableId)
         {
             TabManager tabManager = HttpContext.Session.GetObject<TabManager>("tab" + tableId).Entity as TabManager;
             Order order = new Order()
             {
                 EmployeeId = HttpContext.Session.GetObject<EmployeeSessionDTO>("user").Entity.Employee.EmployeeID,
                 TableId = tableId,
-                OrderDate = dateTime,
+                OrderDate = tabManager.OrderDate,
                 TotalPrice = tabManager.TotalPrice
             };
             if((await _orderProcessor.AddOrderAsync(order)).ResponseMessage.IsSuccessStatusCode)

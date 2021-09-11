@@ -32,10 +32,21 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("add")]
-        public IActionResult AddLayouts(IFormFile file, string directory = null)
+        [HttpPost("upload")]
+        public IActionResult UploadLayouts(IFormFile file, string directory = null)
         {
-            var result = _tableLayoutService.Add(file, directory);
+            var result = _tableLayoutService.Upload(file, directory);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("add")]
+        public IActionResult AddLayouts(string directory = null)
+        {
+            var result = _tableLayoutService.Add(directory);
             if (result.Success)
             {
                 return Ok(result.Message);

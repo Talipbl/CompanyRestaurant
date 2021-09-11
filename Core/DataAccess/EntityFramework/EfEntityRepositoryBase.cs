@@ -20,7 +20,8 @@ namespace Core.DataAccess.EntityFramework
             using (TContext db = new TContext())
             {
                 db.Entry<TEntity>(entity).State = state;
-                return db.SaveChanges();
+                var result = db.SaveChanges();
+                return result;
             }
         }
 

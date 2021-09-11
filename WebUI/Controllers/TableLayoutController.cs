@@ -25,8 +25,9 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddLayout(IFormFile file)
         {
-            string directory = Environment.CurrentDirectory + "\\wwwroot";
-            var result = await _tableLayoutProcessor.AddLayoutAsync(file,directory);
+            //string directory = Environment.CurrentDirectory + "\\wwwroot";
+            string directory = "http://sixxen.xyz/upload_image/upload.php";
+            var result = await _tableLayoutProcessor.UploadLayoutAsync(file,directory);
             if (result.ResponseMessage.IsSuccessStatusCode)
             {
                 TempData["SuccessMessage"] = result.Entity;

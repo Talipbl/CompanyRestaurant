@@ -10,6 +10,7 @@ namespace Business.Abstract
     public interface ITableLayoutService
     {
         IDataResult<List<TableLayout>> GetLayouts();
-        IResult Add(IFormFile file, string directory = null);
+        IResult Upload(IFormFile file, string directory = null);
+        IResult Add(string directory);
     }
 }

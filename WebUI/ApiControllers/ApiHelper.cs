@@ -42,10 +42,10 @@ namespace WebUI.Methods
             return response;
         }
 
-        public static async Task<ResponseDTO<TEntity>> PostMultipartFormApiResponse<TEntity>(HttpClient apiClient, string currentUrl, byte[] entity, string fileName)
+        public static async Task<ResponseDTO<string>> PostMultipartFormApiResponse(HttpClient apiClient, string currentUrl, byte[] entity, string fileName)
         {
             ApiClient = apiClient;
-            ResponseDTO<TEntity> response = new ResponseDTO<TEntity>();
+            ResponseDTO<string> response = new ResponseDTO<string>();
             using (var memoryStream = new MemoryStream(entity))
             {
                 using (var streamContent = new StreamContent(memoryStream))
@@ -61,7 +61,8 @@ namespace WebUI.Methods
                 }
             }
             string result = await response.ResponseMessage.Content.ReadAsStringAsync();
-            response.Entity = JsonConvert.DeserializeObject<TEntity>(result);
+            response.Entity = result;
+            //response.Entity = JsonConvert.DeserializeObject<TEntity>(result);
             return response;
         }
     }

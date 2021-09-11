@@ -32,16 +32,12 @@ namespace Business.Concrete.Managers
             return new ErrorResult();
         }
 
-        public IResult Add(IFormFile file, string directory = null)
+        public IResult Upload(IFormFile file, string directory = null)
         {
             var result = _fileHelper.Upload(file, directory);
             if (result.Success)
             {
-                TableLayout tableLayout = new TableLayout()
-                {
-                    LayoutPath = result.Message
-                };
-                return BaseProcess(_tableLayoutDal.Add(tableLayout), Messages.Added);
+                Add(result.Message);
             }
             return new ErrorResult(result.Message);
         }
@@ -57,12 +53,21 @@ namespace Business.Concrete.Managers
                 {
                     tableLayout = new TableLayout();
                     tableLayout.LayoutID = path.LayoutID;
-                    tableLayout.LayoutPath = FileHelper.GetCurrentDirectory.Replace("\\", "/") + path.LayoutPath;
+                    tableLayout.LayoutPath = FileHelper.GetCustomDirectory.Replace("\\", "/") + path.LayoutPath;
                     pathLayouts.Add(tableLayout);
                 }
             }
 
             return new SuccessDataResult<List<TableLayout>>(pathLayouts);
+        }
+
+        public IResult Add(string directory)
+        {
+            TableLayout tableLayout = new TableLayout()
+            {
+                LayoutPath = directory
+            };
+            return BaseProcess(_tableLayoutDal.Add(tableLayout), Messages.Added);
         }
     }
 }

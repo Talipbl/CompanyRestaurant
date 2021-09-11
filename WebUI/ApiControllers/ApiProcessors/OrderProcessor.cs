@@ -56,7 +56,7 @@ namespace WebUI.ApiControllers.ApiProcessors
             return await ApiHelper.GetApiResponse<decimal>(ApiClient, currentUrl);
         }
 
-        public async Task<ResponseDTO<List<Order>>> GetLastOrdersAsync(int takeValue = 100)
+        public async Task<ResponseDTO<List<Order>>> GetLastOrdersAsync(int takeValue = 10)
         {
             string currentUrl = _url + "getlastorders?takeValue=" + takeValue;
             return await ApiHelper.GetApiResponse<List<Order>>(ApiClient, currentUrl);

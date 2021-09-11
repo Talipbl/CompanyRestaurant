@@ -49,10 +49,10 @@ namespace Business.Concrete.Managers
         {
             return BaseProcess(_orderDal.Update(order), Messages.Updated);
         }
-        
-        public IDataResult<List<Order>> GetLastOrders(int takeValue = 100)
+
+        public IDataResult<List<Order>> GetLastOrders(int takeValue = 10)
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetLastOrders((x => x.OrderDate.Day == DateTime.Now.Day),takeValue), Messages.AllListed);
+            return new SuccessDataResult<List<Order>>(_orderDal.GetLastOrders((x => x.OrderDate.Day == DateTime.Now.Day && x.OrderDate.Month == DateTime.Now.Month && x.OrderDate.Year == DateTime.Now.Year), takeValue), Messages.AllListed);
         }
 
         public IDataResult<List<Order>> GetLastOrdersWithOrderBy()

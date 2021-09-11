@@ -11,6 +11,7 @@ namespace WebUI.Models.Managers
 
         public List<Tab> Tabs => TabsDictionary.Values.ToList();
         public decimal TotalPrice => TabsDictionary.Sum(x => x.Value.SubPrice);
+        public DateTime OrderDate { get; set; }
 
         public void Add(Tab cart)
         {

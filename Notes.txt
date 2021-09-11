@@ -1,0 +1,5 @@
+10/09/2021
+- Görsel yükleme yapýlabiliyor fakat görsel okunamýyor.
+11/09/2021
+- Sunucuya görsel yükleme iþlemi yapýldý. Geri dönüþ deðeri düzenlenecek ve görseli okuma iþlemi yapýlacak.
+- Upload kodlarý için Code Refactoring yapýlacak.

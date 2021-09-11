@@ -87,7 +87,7 @@ namespace WebUI.Controllers
             {
                 TableLayouts = result.Entity
             };
-            return View(model);
+                return View(model);
         }
     }
 }
