@@ -2,7 +2,7 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 *scss linguist-detectable=false
-*JavaScript linguist-detectable=false
+*javascript linguist-detectable=false
 * text=auto
 
 ###############################################################################
